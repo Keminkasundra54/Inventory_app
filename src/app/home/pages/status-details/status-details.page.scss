@@ -1,0 +1,259 @@
+section {
+    padding: 10px;
+    margin-bottom: 50px;
+
+    swiper-container {
+        padding-top: 20px;
+
+        swiper-slide {
+            // height: 100%;
+            // width: 100%;
+
+            height: 40vh;
+            width: auto;
+
+            img {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+
+        .product-header-left {
+            width: calc(100% - 50px);
+
+        }
+
+        .product-header-right {
+            width: 50px;
+
+            a {
+                height: 100%;
+                width: 100%;
+
+                span {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    svg {
+                        width: 30px;
+                        height: 30px;
+
+                    }
+                }
+            }
+
+            .addWish {
+                span {
+                    svg {
+                        path {
+
+                            stroke: var(--ion-color-danger);
+                            fill: transparent;
+                        }
+
+                    }
+                }
+            }
+
+            .removeWish {
+                span {
+                    svg {
+                        path {
+                            fill: var(--ion-color-danger);
+                            stroke: var(--ion-color-danger);
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .main-details-sec {
+        padding-top: 15px;
+
+        .main-first-sec {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .first-left .price {
+
+            p {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--ion-color-success);
+            }
+
+            span.priceSpan {
+                text-decoration: line-through;
+                padding-left: 10px;
+                display: inline-block;
+                line-height: 0;
+                color: var(--darkGrey);
+                font-size: 12px;
+                font-weight: 500;
+
+                span.disc {
+                    text-decoration: none !important;
+                    display: inline-block;
+                    line-height: 0;
+                    padding-left: 10px;
+                    font-size: 12px;
+
+                }
+            }
+
+        }
+
+        .first-right {
+            .stock {
+                p {
+                    font-weight: 600;
+                    color: var(--ion-color-secondary);
+
+                    span {
+                        font-weight: 500;
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+
+        .product-box {
+            padding-top: 10px;
+
+            .product-title h4 {
+                font-size: 18px;
+                font-weight: 600;
+                // color: var(--darkGrey);
+            }
+
+            .product-desc {
+                ul {
+                    padding-top: 20px;
+                    li {
+                        padding-left: 50px;
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            height: 30px;
+                            width: 30px;
+                            background-color: grey;
+                            border-radius: 50%;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0%;
+                            background-position: center center;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                        &:not(:first-child)::before {
+                            content: "";
+                            height: 23px;
+                            width: 2px;
+                            border-radius: 50%;
+                            position: absolute;
+                            left: 14px;
+                            top: 19%;
+                            background-color: grey;
+                            transform: translateY(-50%);
+                            
+                        }
+                    }
+
+                    li.success {
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            height: 30px;
+                            width: 30px;
+                            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%232dd36f' d='M5.48 10.089l1.583-1.464c1.854.896 3.028 1.578 5.11 3.063 3.916-4.442 6.503-6.696 11.311-9.688l.516 1.186c-3.965 3.46-6.87 7.314-11.051 14.814-2.579-3.038-4.301-4.974-7.469-7.911zm14.407.557c.067.443.113.893.113 1.354 0 4.962-4.038 9-9 9s-9-4.038-9-9 4.038-9 9-9c1.971 0 3.79.644 5.274 1.723.521-.446 1.052-.881 1.6-1.303-1.884-1.511-4.271-2.42-6.874-2.42-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11c0-1.179-.19-2.313-.534-3.378-.528.633-1.052 1.305-1.579 2.024z'/%3E%3C/svg%3E");
+                            border-radius: 50%;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0%;
+                            background-color: transparent;
+                            background-position: center center;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                        & :not(:first-child)::before {
+                            content: '';
+                            height: 30px;
+                            width: 2px;
+                            border-radius: 8px;
+                            position: absolute;
+                            left: 14px;
+                            top: 0%;
+                            background-color: #2dd36f;
+                            transform: translateY(-50%);
+                            
+                        }
+
+
+                    }
+
+                    li.cancel {
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            height: 30px;
+                            width: 30px;
+                            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23eb445a' d='M24 3.752l-4.423-3.752-7.771 9.039-7.647-9.008-4.159 4.278c2.285 2.885 5.284 5.903 8.362 8.708l-8.165 9.447 1.343 1.487c1.978-1.335 5.981-4.373 10.205-7.958 4.304 3.67 8.306 6.663 10.229 8.006l1.449-1.278-8.254-9.724c3.287-2.973 6.584-6.354 8.831-9.245z'/%3E%3C/svg%3E");
+                            border-radius: 50%;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0%;
+                            background-color: transparent;
+                            background-position: center center;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                        &::before {
+                            content: '';
+                            height: 30px;
+                            width: 2px;
+                            border-radius: 8px;
+                            position: absolute;
+                            left: 14px;
+                            top: 30%;
+                            background-color: #eb445a;
+                            
+                        }
+
+                    }
+                    li+li{
+                        padding-top: 20px;
+                    }
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+
+
+        }
+
+        .proButtons {
+            padding-top: 15px;
+        }
+    }
+}

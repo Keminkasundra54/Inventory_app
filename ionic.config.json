@@ -1,0 +1,7 @@
+{
+  "name": "ceramic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

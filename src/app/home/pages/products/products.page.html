@@ -1,0 +1,322 @@
+<ion-menu menuId="first-menu" contentId="main-content" side="end">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Filters</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeMenu()" size="large">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div class="product-left-col" *ngIf="mobile">
+      <div class="product-left-header" *ngIf="!mobile">
+        <h4>Filters</h4>
+      </div>
+      <div class="product-left-content">
+        <div class="cat-box">
+          <div class="cat-box-inr">
+            <div class="cat-title">
+              <h5>price</h5>
+            </div>
+            <div class="cat-content">
+              <ion-range aria-label="Dual Knobs Range" [dualKnobs]="true" min="{{ minValue }}" max="{{ maxValue }}"
+                [value]="{ lower: minValue, upper: maxValue } " (click)="$event.stopPropagation()"
+                (ionChange)="range($event)" [pin]="true">
+                <ion-label slot="start">
+                  <p>{{selMinRange ? selMinRange : minValue}}</p>
+                </ion-label>
+                <ion-label slot="end">
+                  <p>{{selMaxRange ? selMaxRange :maxValue}}</p>
+                </ion-label>
+              </ion-range>
+
+            </div>
+          </div>
+        </div>
+        <!-- <div class="cat-box" *ngIf="categoryName">
+          <div class="cat-box-inr">
+            <div class="cat-title">
+              <h5>Category</h5>
+            </div>
+            <div class="cat-content">
+              <p>{{categoryName}}</p>
+            </div>
+          </div>
+        </div> -->
+        <div class="cat-box">
+          <div class="cat-box-inr">
+            <div class="cat-title">
+              <h5>Size</h5>
+            </div>
+            <div class="cat-content">
+              <ul class="ul">
+                <li *ngFor="let size of sizes"><ion-checkbox labelPlacement="end" (click)="$event.stopPropagation()"
+                    (ionChange)="onSizeCheckboxChange(size, $event)">{{size}}</ion-checkbox></li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cat-box">
+          <div class="cat-box-inr">
+            <div class="cat-title">
+              <h5>Color</h5>
+            </div>
+            <div class="cat-content">
+              <ul class="ul">
+                <li *ngFor="let color of colors"><ion-checkbox labelPlacement="end"
+                    (ionChange)="onColorCheckboxChange(color, $event)">{{color}}</ion-checkbox></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer class="ion-padding">
+    <ion-button (click)="submit()" expand="block">Apply</ion-button>
+
+  </ion-footer>
+</ion-menu>
+<ion-menu menuId="second-menu" contentId="main-content" (ionDidClose)="sidemenuclose()">
+  <ion-header>
+    <ion-toolbar color="primary">
+
+      <ion-title>Menu</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeMenu()" size="large">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list *ngIf="userId">
+      <ion-item (click)="profile()">
+        <ion-icon aria-hidden="true" name="person-outline" slot="start"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-item>
+      <ion-item (click)="status()">
+        <ion-icon aria-hidden="true" name="bar-chart-outline" slot="start"></ion-icon>
+        <ion-label>Your Orders</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="block" color="danger" shape="round" (click)="logOut()" *ngIf="userId">
+        Logout
+      </ion-button>
+      <ion-button expand="block" color="primary" shape="round" (click)="login()" *ngIf="!userId">
+        Login
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+<div class="ion-page" id="main-content">
+
+  <ion-header>
+    <ion-toolbar color="primary">
+
+      <ion-buttons slot="start">
+
+        <ion-button size="large" (click)="openSecondMenu()"><ion-icon name="menu-outline"></ion-icon></ion-button>
+      </ion-buttons>
+      <ion-title>Product List</ion-title>
+
+      <ion-buttons slot="end">
+
+        <!-- <ion-button id="open-modal" size="large" >
+          <ion-badge color="primary" >42</ion-badge> -->
+        <ion-button id="open-modal" size="large">
+          <!-- <ion-badge color="primary">{{42}}</ion-badge> -->
+          <ion-icon name="notifications"></ion-icon>
+          <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+            <ng-template>
+              <app-notification (cancelModal)="cancel()"></app-notification>
+            </ng-template>
+
+          </ion-modal>
+        </ion-button>
+
+        <!-- <ion-menu-button> -->
+        <ion-button *ngIf="mobile" (click)="openFirstMenu()" size="large">
+          <!-- <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+            <path
+              d="M23 0l-9 14.146v7.73l-3.996 2.124v-9.853l-9.004-14.147h22zm-20.249 1l8.253 12.853v8.491l1.996-1.071v-7.419l8.229-12.854h-18.478z" />
+          </svg> -->
+          <ion-icon name="funnel-outline"></ion-icon>
+        </ion-button>
+        <!-- </ion-menu-button> -->
+
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <div class="searchbar">
+
+    <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event) " #search></ion-searchbar>
+
+    <ion-list *ngIf="search.value">
+      <ng-container *ngIf="results.length">
+        <ion-item *ngFor="let result of results" [routerLink]="['../product-details',result._id]">
+          <ion-thumbnail slot="start">
+            <img [src]="link + result.images[0]" alt="Product Image">
+          </ion-thumbnail>
+          <ion-label>
+            <h6>{{result.productName}}</h6>
+            <p>{{result.categoryName}}</p>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+      <ng-container *ngIf="!results.length">
+        <ion-item>
+          <ion-label>No result found</ion-label></ion-item>
+      </ng-container>
+    </ion-list>
+  </div>
+  <app-categories (selectedCatFun)="selectedCat($event)"></app-categories>
+  <ion-item>
+    <ion-label>Showing {{selectedCatId ? products.length : data.length}} Results for {{selectedCatId ? categoryName :
+      'All'}}</ion-label>
+  </ion-item>
+  <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <section class="product-listing">
+      <div class="wrapper">
+        <div class="product-header">
+          <div class="product-title" *ngIf="!mobile">
+            <h2>Products</h2>
+          </div>
+        </div>
+        <div class="product-content">
+          <div class="product-two-col " [ngClass]="{'flex' : !mobile }">
+            <div class="product-left-col" *ngIf="!mobile">
+              <div class="product-left-header">
+                <h4>Filters</h4>
+              </div>
+              <div class="product-left-content">
+                <div class="cat-box">
+                  <div class="cat-box-inr">
+                    <div class="cat-title">
+                      <h5>price</h5>
+                    </div>
+                    <div class="cat-content">
+                      <ion-range aria-label="Dual Knobs Range" [dualKnobs]="true" min="{{ minValue }}"
+                        max="{{ maxValue }}" [value]="{ lower: minValue, upper: maxValue } " (ionChange)="range($event)"
+                        [pin]="true">
+                        <ion-label slot="start">
+                          <p>{{minValue}}</p>
+                        </ion-label>
+                        <ion-label slot="end">
+                          <p>{{maxValue}}</p>
+                        </ion-label>
+                      </ion-range>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="cat-box">
+                <div class="cat-box-inr">
+                  <div class="cat-title">
+                    <h6>Category</h6>
+                  </div>
+                  <div class="cat-content">
+                    <p>{{categoryName}}</p>
+                  </div>
+                </div>
+              </div> -->
+                <div class="cat-box">
+                  <div class="cat-box-inr">
+                    <div class="cat-title">
+                      <h6>Size</h6>
+                    </div>
+                    <div class="cat-content">
+                      <ul class="ul">
+                        <li *ngFor="let size of sizes"><ion-checkbox labelPlacement="end"
+                            (ionChange)="onSizeCheckboxChange(size, $event)">{{size}}</ion-checkbox></li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="cat-box">
+                  <div class="cat-box-inr">
+                    <div class="cat-title">
+                      <h6>Color</h6>
+                    </div>
+                    <div class="cat-content">
+                      <ul class="ul">
+                        <li *ngFor="let color of colors"><ion-checkbox labelPlacement="end"
+                            (ionChange)="onColorCheckboxChange(color, $event)">{{color}}</ion-checkbox></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="product-right-col">
+              <div class="product-right-header" *ngIf="!mobile">
+                <h4>Product list</h4>
+              </div>
+              <div class="product-right-content">
+                <!-- <ion-item lines="none">
+                  <ion-label slot="start"><h2>Products</h2></ion-label>
+                </ion-item> -->
+                <ion-list>
+                  <ng-container *ngIf="products.length">
+                    <ion-item lines="none" *ngFor="let product of products"
+                      [routerLink]="['../product-details',product._id]">
+                      <div class="three-col flex align-center">
+                        <div class="left-col">
+                          <ion-thumbnail slot="start" *ngIf="product && product.images && product.images.length">
+                            <img src="{{link + product?.images[0]}}" alt="Product Image">
+                          </ion-thumbnail>
+                        </div>
+                        <div class="center-col">
+                          <div class="productName">
+                            <h5>{{ product.productName }}</h5>
+                          </div>
+                          <!-- <div class="productDesc" >
+                        <p>{{ product.description }}</p>
+                      </div> -->
+                          <div class="productPrice" *ngIf="mobile">
+
+                            <p>₹{{ product.discountPrice }}</p>
+                          </div>
+                          <div class="productDetail" *ngIf="mobile">
+
+                            <a [routerLink]="['../product-details',product._id]">View Details<span> <ion-icon
+                                  name="chevron-forward-outline"></ion-icon></span></a>
+                          </div>
+                        </div>
+                        <div class="right-col">
+                          <div class="productPrice">
+
+                            <p>₹{{ product.discountPrice }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </ion-item>
+                  </ng-container>
+                </ion-list>
+                <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" *ngIf="data.length != products.length">
+                  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </ion-content>
+</div>

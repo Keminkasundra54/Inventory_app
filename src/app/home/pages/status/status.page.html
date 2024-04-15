@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="orderData && orderData.length">
+
+    <ion-list>
+      <ion-item lines="none" *ngFor="let order of orderData.reverse()" [ngClass]="[
+      order.orderData.status == 'new order' ? 'newOrder' : '',
+      order.orderData.status == 'In Process' ? 'inProcess' : '',
+      order.orderData.status == 'Shipped' ? 'shipped' : '',
+      order.orderData.status == 'Delivered' ? 'deliver' : '',
+      order.orderData.status == 'cancelled' ? 'cancelled' : '']">
+        <div class="three-col flex align-center">
+          <div class="left-col">
+            <ion-thumbnail slot="start">
+              <img [src]="link + order.productData.images[0]" alt="Product Image">
+            </ion-thumbnail>
+          </div>
+          <div class="center-col">
+            <div class="productName">
+              <h5>{{ order.productData.productName }}</h5>
+            </div>
+            <!-- <div class="productDesc" >
+            <p>{{ product.description }}</p>
+          </div> -->
+            <div class="productPrice" *ngIf="mobile">
+
+              <p>₹{{ order.productData.discountPrice }}</p>
+            </div>
+            <div class="productDetail" *ngIf="mobile">
+
+              <a [routerLink]="['../status-details',order.orderData._id]">View Details<span> <ion-icon
+                    name="chevron-forward-outline"></ion-icon></span></a>
+            </div>
+
+
+          </div>
+          <div class="right-col">
+            <div class="productPrice">
+
+              <p>₹{{ order.productData.discountPrice }}</p>
+            </div>
+          </div>
+        </div>
+
+
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="orderData && !orderData.length">
+    <div class="empty">
+      <h3>No orders</h3>
+    </div>
+  </ng-container>
+</ion-content>

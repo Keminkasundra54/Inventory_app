@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Log In</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="login-inr">
+    <h3>
+      Welcome to the Ceramic world!!
+    </h3>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ion-item lines="full">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" required formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="{{togglePw ? 'text' : 'password'}}" required formControlName="password">
+        </ion-input>
+        <a (click)="togglePw =! togglePw">
+          <ion-icon name="{{togglePw ? 'eye-off' : 'eye' }}" slot="end"></ion-icon>
+        </a>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" expand="block">Sign In</ion-button>
+          <div class="flex j-spacebw bottomButtons">
+            <a [routerLink]="['/forget-password']" class="small-text">Forgot Password?</a>
+            <a [routerLink]="['/signup']" class="small-text">Register User.</a>
+
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+</ion-content>

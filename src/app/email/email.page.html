@@ -1,0 +1,18 @@
+<section class="email-verification">
+  <div class="wrapper">
+    <div class="email-inr">
+      <ng-container *ngIf="!proccesing">
+
+        <h1 class="text-center">
+          Proccesing...
+        </h1>
+      </ng-container>
+      <ng-container *ngIf="proccesing">
+
+        <h1 class="text-center">
+          Your Email verified suucessfully!
+        </h1>
+      </ng-container>
+    </div>
+  </div>
+</section>

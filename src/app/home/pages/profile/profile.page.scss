@@ -1,0 +1,36 @@
+ion-content {
+    background-color: var(--background);
+
+    .profile-img {
+        ion-avatar {
+            width: 100%;
+            height: 25vh;
+            max-width: 150px;
+            padding: 20px 0;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            .imgDiv {
+                position: relative;
+                height: 100%;
+                width: 100%;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    /* margin: 0 auto; */
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+    
+                ion-fab {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0px;
+                }
+            }
+
+        }
+    }
+}

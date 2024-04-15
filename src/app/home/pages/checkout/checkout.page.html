@@ -1,0 +1,322 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <section>
+    <div class="address">
+
+      <div class="addressTitle">
+        <!-- <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />  -->
+
+      </div>
+      <div class="addressContent" *ngIf="oldAddressData.length">
+        <h5>Select address:</h5>
+        <ion-select label="{{!selectedAddress ? 'select address' : 'selected address'}}" label-placement="floating"
+          (ionChange)="addOptions($event)" [value]="oldAddressData[0]._id">
+          <ion-select-option *ngFor="let item of oldAddressData" value="{{item._id}}">{{ item.apartment}} ,
+            {{item.address}} , {{item.city}} , {{item.state}} , {{item.country}} , {{item.zip}}</ion-select-option>
+        </ion-select>
+        <span class="error" *ngIf="!selectedAddress">*Please select address</span>
+      </div>
+      <!-- <ion-button *ngIf="!add" (click)="add = !add ; addAddress()">
+        <ion-icon name="add-outline"></ion-icon>
+        Add address
+      </ion-button> -->
+      <ion-button id="open-address" expand="block">Add New Address</ion-button>
+      <ion-modal trigger="open-address" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel()" type="canel">Cancel</ion-button>
+              </ion-buttons>
+              <ion-title>Add Address</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="confirm() ; newAddress()" type="submit" [strong]="true">Confirm</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <form [formGroup]="addressForm">
+
+
+              <ion-item>
+                <ion-label position="floating">Flat/Apt.</ion-label>
+                <ion-input formControlName="apartment" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Address</ion-label>
+                <ion-input formControlName="address" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Zipcode/Postcode</ion-label>
+                <ion-input formControlName="zip" type="number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input formControlName="city" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">State</ion-label>
+                <ion-input formControlName="state" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Country</ion-label>
+                <ion-input formControlName="country" type="text"></ion-input>
+              </ion-item>
+            </form>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- <ng-container *ngIf="add">
+        <form [formGroup]="addressForm" (ngSubmit)="newAddress()">
+          <fieldset>
+            <ng-container formArrayName="address" *ngFor="let address of getAddressess(); let i = index">
+
+              <div class="field">
+                <ion-item>
+                  <ion-textarea label="Add new address" labelPlacement="floating" [formControl]="address"
+                    placeholder="Enter address"></ion-textarea>
+                </ion-item>
+              </div>
+          
+            </ng-container>
+          </fieldset>
+          <fieldset>
+            <div class="field">
+              <ion-button type="reset" (click)="add = false" color="danger">Cancel</ion-button>
+              <ion-button type="submit" color="primary">Submit</ion-button>
+
+            </div>
+          </fieldset>
+        </form>
+      </ng-container> -->
+      <div class="cartContent">
+        <ng-container *ngIf="cartData && cartData.length">
+
+          <ion-list>
+            <ng-container *ngFor="let product of cartData.reverse()">
+
+              <ion-item lines="none" *ngIf="product.product.stock > 0">
+                <div class="three-col flex align-center">
+                  <div class="left-col">
+                    <ion-thumbnail slot="start">
+                      <img [src]="link + product.product.images[0]" alt="Product Image">
+                    </ion-thumbnail>
+                    <!-- <div class="counter flex align-center">
+      
+                    <a (click)="decreaseQuantity(product)">
+                      <ion-icon name="remove-outline"></ion-icon>
+                    </a>
+                    {{ product.quantity }}
+                    <a (click)="increaseQuantity(product)">
+                      <ion-icon name="add-outline"></ion-icon>
+                    </a>
+                  </div> -->
+                  </div>
+                  <div class="center-col">
+                    <div class="productName">
+                      <h5>{{ product.product.productName }}</h5>
+                    </div>
+                    <!-- <div class="productDesc" >
+                  <p>{{ product.description }}</p>
+                </div> -->
+                    <div class="productPrice" *ngIf="mobile">
+
+                      <p>₹{{ product.product.discountPrice }}</p>
+                    </div>
+                    <div class="productDetail" *ngIf="mobile">
+
+                      <a [routerLink]="['../product-details',product.product._id]">View Details<span> <ion-icon
+                            name="chevron-forward-outline"></ion-icon></span></a>
+                    </div>
+
+                    <!-- <div class="removeButton">
+                    <a (click)="removeProduct(product)">
+                      <ion-icon slot="end" name="trash"></ion-icon>
+                    </a>
+                  </div> -->
+                  </div>
+                  <div class="right-col">
+                    <div class="productPrice">
+
+                      <p>₹{{ product.product.price }}</p>
+                    </div>
+                  </div>
+                </div>
+
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ng-container>
+      </div>
+
+      <div class="promoCode">
+        <form [formGroup]="promoForm">
+          <ion-list>
+            <ion-item>
+              <ion-input type="text" placeholder="Promo code" formControlName="promo"></ion-input>
+
+
+
+              <ion-buttons slot="end">
+                <ion-button (click)="applyPromocode()" fill="solid" color="primary">
+                  Apply
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <!-- {{this.promoCode  | json}} -->
+            <span class="error"
+              *ngIf="promoForm.controls['promo'].invalid && promoForm.controls['promo'].touched">*Please enter valid
+              Promocode</span>
+
+            <span class="error"
+              *ngIf="promoForm.controls['promo'].touched && getMainPrice() <= (this.promoCode && this.promoCode.amount ? this.promoCode.amount : '')">*This
+              code apply only when price is more than {{this.promoCode.amount}}</span>
+          </ion-list>
+        </form>
+      </div>
+      <div class="priceContent">
+        <div class="price-header">
+          <div class="price-title">
+            <h5>Price Details</h5>
+          </div>
+        </div>
+        <div class="price-content">
+
+          <div class="price-two-col flex">
+            <div class="price-left-col">
+
+              <p>price( {{cartData.length}} {{cartData.length > 1 ? 'Items' : 'Item'}})</p>
+            </div>
+            <div class="price-right-col">
+              <p>₹{{ getMainPrice() }}</p>
+            </div>
+          </div>
+          <div class="price-two-col flex">
+            <div class="price-left-col">
+
+              <p>Discount</p>
+            </div>
+            <div class="price-right-col">
+              <p> - ₹{{calculateDiscountPrice() }}</p>
+            </div>
+          </div>
+          <div class="price-two-col flex"
+            *ngIf="promoCode && getMainPrice() > (this.promoCode && this.promoCode.amount ? this.promoCode.amount : '')">
+            <div class="price-left-col">
+
+              <p>Promo Code</p>
+            </div>
+            <div class="price-right-col">
+              <p> - ₹{{promocode() }} <span *ngIf="promoCode.type == 'percentage'">({{promoCode.amount}}%)</span></p>
+            </div>
+          </div>
+          <div class="price-two-col flex">
+            <div class="price-left-col">
+
+              <p>Total</p>
+            </div>
+            <div class="price-right-col">
+              <p>₹{{getTotalPrice() }}</p>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</ion-content>
+
+<ion-footer *ngIf="cartData.length && getTotalPrice() ">
+  <ion-toolbar>
+    <div class="total-price-container">
+
+      <div class="cartFooter">
+        <div class="footer-box">
+          <div class="footer-left">
+            <h6>Total Price:</h6>
+            <p>₹{{ getTotalPrice() }}</p>
+          </div>
+          <div class="footer-right">
+            <ion-button expand="full" color="primary" (click)="createRpOrder()">Continue<ion-icon
+                name="arrow-forward-outline"></ion-icon></ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>
+
+<!-- <ion-content *ngIf="loader">
+  <span class="loader"></span>
+</ion-content> -->
+
+<!-- <ion-content [fullscreen]="true" *ngIf="paymentScreen && success && !loader">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <symbol id="check" viewBox="0 0 16 16">
+        <path fill="currentColor"
+          d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M7,11.4L3.6,8L5,6.6l2,2l4-4L12.4,6L7,11.4z"></path>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="container test">
+    <div class="success-block">
+      <svg class="icon success-icon" aria-hidden="true" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <use xlink:href="#check"></use>
+      </svg>
+
+      <div class="title">
+        <span>S</span>
+        <span>u</span>
+        <span>c</span>
+        <span>c</span>
+        <span>e</span>
+        <span>s</span>
+        <span>s</span>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-content [fullscreen]="true" *ngIf="paymentScreen && failed && !loader">
+
+
+  <div class="container test">
+    <div class="success-block">
+
+      <svg class="icon success-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1" id="Capa_1" viewBox="0 0 50 50" xml:space="preserve">
+        <circle style="fill:#D75A4A;" cx="25" cy="25" r="25" />
+        <polyline style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+          points="16,34 25,25 34,16   " />
+        <polyline style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+          points="16,16 25,25 34,34   " />
+      </svg>
+      <div class="title">
+        <span>F</span>
+        <span>a</span>
+        <span>i</span>
+        <span>l</span>
+        <span>e</span>
+        <span>d</span>
+      </div>
+    </div>
+  </div>
+</ion-content> -->
+
+

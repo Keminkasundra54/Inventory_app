@@ -1,0 +1,16 @@
+<section class="slider-section">
+  <div class="wrapper">
+    <div class="slider-inr">
+      <swiper-container [slidesPerView]="1" [navigation]="true" [pagination]="{ clickable: true }" [loop]="true"
+         [modules]="swiperModules" [autoplay]="true">
+        <swiper-slide *ngFor="let slide of categories" class="swiperRelative">
+
+          <!-- <img src="{{slide.img}}"> -->
+          <div class="slide-bg bg" style="background-image: url({{slide.img}});" (click)="selected(slide)"></div>
+          <!-- {{slide.title}} -->
+          <!-- <ion-icon name="close-outline" class="rmvProfile" (click)="rmvProfile(slide)"></ion-icon> -->
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+</section>

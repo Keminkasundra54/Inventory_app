@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="login-inr">
+    <h3>
+      Please register for new journey.
+    </h3>
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <ion-item lines="full">
+        <ion-label position="floating">First name</ion-label>
+        <ion-input type="text" required formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Last name</ion-label>
+        <ion-input type="text" required formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" required formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Phone</ion-label>
+        <ion-input type="number" required formControlName="phone"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="{{togglePw ? 'text' : 'password'}}" required formControlName="password">
+        </ion-input>
+        <a (click)="togglePw =! togglePw">
+          <ion-icon name="{{togglePw ? 'eye-off' : 'eye' }}" slot="end"></ion-icon>
+        </a>
+
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" expand="block">Sign Up</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+</ion-content>

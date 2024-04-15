@@ -1,0 +1,43 @@
+<section class="deals-section">
+  <div class="wrapper">
+    <div class="deals-inr">
+      <div class="deals-header w100 flex j-spacebw align-center">
+        <div class="deals-left">
+          <h3>Best Deals</h3>
+
+        </div>
+        <div class="deals-right">
+          <a (click)="dealsPage()"><ion-icon name="chevron-forward-circle" size="large"></ion-icon></a>
+        </div>
+      </div>
+      <div class="deal-slider">
+
+        <swiper-container [slidesPerView]="mobile ? 2 :4" [spaceBetween]="20" [navigation]="true" [loop]="true"
+          [modules]="swiperModules">
+          <swiper-slide *ngFor="let slide of categories" class="swiperRelative">
+
+            <!-- <img src="{{slide.img}}"> -->
+            <div class="outer">
+
+              <div class="deals-bg bg" style="background-image: url({{slide.img}});" (click)="selected(slide)"></div>
+              <div class="deal-text">
+                <div class="title">
+
+                  <h5>{{slide.title}}</h5>
+                </div>
+                <div class="desc">
+                  <p>{{slide.title}}</p>
+
+                </div>
+              </div>
+            </div>
+            <!-- {{slide.title}} -->
+            <!-- <ion-icon name="close-outline" class="rmvProfile" (click)="rmvProfile(slide)"></ion-icon> -->
+          </swiper-slide>
+        </swiper-container>
+
+      </div>
+
+    </div>
+  </div>
+</section>

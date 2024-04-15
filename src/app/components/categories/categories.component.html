@@ -1,0 +1,48 @@
+<!-- <section class="categories">
+  <div class="wrapper">
+    <div class="cate-inr">
+ 
+      <ng-container >
+        <div class="box-grp">
+       
+          <swiper-container [slidesPerView]="mobile  ? '6' : '4.5'" [spaceBetween]="20" [modules]="swiperModules">
+            
+            <swiper-slide *ngFor="let slide of categories" class="swiperRelative">
+
+              <div class="box" (click)="selected(slide)" >
+                <div class="box-inr">
+                  <div class="box-img bg" style="background-image: url({{link}}{{slide.images[0]}});">
+                  </div>
+                  <div class="box-title">
+                    <h6>{{slide.categoryName}}</h6>
+                  </div>
+                </div>
+              </div>
+            
+            </swiper-slide>
+          </swiper-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section> -->
+
+<div class="topic">
+
+  <ion-item lines="none">
+    <ion-label slot="start"><h2>Category</h2></ion-label>
+    <ion-label slot="end" (click)="showAll = !showAll" *ngIf="categories.length > 4">{{showAll ? 'Hide' : 'Show All'}}</ion-label>
+  </ion-item>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="3" *ngFor="let slide of  (showAll ? categories : categories.slice(0, 4))" >
+        <ion-card (click)="selected(slide)">
+          <ion-thumbnail>
+            <img src="{{link + slide.images[0]}}" />
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap ion-text-center">{{slide.categoryName}}</ion-label>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

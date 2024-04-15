@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button (click)="editMode = !editMode">
+        <ion-icon name="create-outline" size="default"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item class="profile-img">
+      <ion-avatar>
+        <div class="imgDiv">
+
+          <ng-container *ngIf="userInfo">
+            <img src="../../../../assets/images/person.jpg" *ngIf="!userInfo?.profilePic?.length" />
+            <img src="{{link + userInfo.profilePic}}" *ngIf="userInfo?.profilePic?.length" />
+          </ng-container>
+          <ion-fab>
+            <ion-fab-button>
+              <ion-icon name="camera" (click)="presentActionSheet()"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </div>
+
+      </ion-avatar>
+
+    </ion-item>
+
+    <form [formGroup]="profileForm" (ngSubmit)="submit()">
+      <ion-list class="ion-padding">
+        <ion-item>
+          <ion-label position="floating">First Name</ion-label>
+          <ion-input formControlName="firstName" type="text" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Last Name</ion-label>
+          <ion-input formControlName="lastName" type="text" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Phone</ion-label>
+          <ion-input formControlName="phone" type="number" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Gender</ion-label>
+          <ion-select formControlName="gender" >
+            <ion-select-option value="male" >Male</ion-select-option>
+            <ion-select-option value="female" >Female</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
+
+        <!-- Address FormArray -->
+        <div formArrayName="address">
+
+          <ng-container *ngFor="let address of getAddressControls(); let i = index" [formGroupName]="i">
+            <ion-item color="primary">
+
+              <ion-label>{{ 'Address ' + (i + 1) }}</ion-label>
+              <ion-buttons slot="end" color="danger" *ngIf="userInfo.address.length > 1">
+
+                <ion-button (click)="removeAddress(i)" fill="solid" color="danger">Remove</ion-button>
+
+              </ion-buttons>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Flat/Aprt</ion-label>
+              <ion-input type="text" formControlName="apartment" placeholder="Flat/aprt"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Address</ion-label>
+              <ion-input type="text" formControlName="address" placeholder="Address"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">City</ion-label>
+              <ion-input type="text" formControlName="city" placeholder="City"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Zipcode/Pincode</ion-label>
+              <ion-input type="number" formControlName="zip" placeholder="Zip"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">State</ion-label>
+              <ion-input type="text" formControlName="state" placeholder="State"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Country</ion-label>
+              <ion-input type="text" formControlName="country" placeholder="Country"></ion-input>
+            </ion-item>
+
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-button (click)="addAddress()">Add Address</ion-button>
+        </ion-item>
+        <ion-button expand="block" type="submit">Save</ion-button>
+      </ion-list>
+
+
+      <!-- <ion-button expand="block" type="submit" [disabled]="!profileForm.valid">Save</ion-button> -->
+    </form>
+  </ion-list>
+
+</ion-content>

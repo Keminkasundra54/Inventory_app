@@ -1,0 +1,32 @@
+ion-content{
+    .login-inr {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        /* align-content: center; */
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        form {
+            width: 500px;
+
+            ion-item {
+                position: relative;
+                // --ion-background-color:transparent
+                a {
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateX(-50%);
+                    z-index: 99;
+                }
+            }
+            ion-button{
+                padding-top: 10px;
+            }
+            .bottomButtons{
+                padding-top: 20px;
+            }
+        }
+    }
+}

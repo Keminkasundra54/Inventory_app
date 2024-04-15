@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Cart</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="open-modal2" size="large">
+
+        <ion-icon name="notifications"></ion-icon>
+        <ion-modal trigger="open-modal2" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <app-notification (cancelModal)="cancel()"></app-notification>
+          </ng-template>
+
+        </ion-modal>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="cartData && cartData.length">
+    <ion-list>
+      <ion-item lines="none" *ngFor="let product of cartData.reverse()">
+        <div class="three-col flex align-center">
+          <div class="left-col">
+            <ion-thumbnail slot="start">
+              <img [src]="link + product.product.images[0]" alt="Product Image">
+            </ion-thumbnail>
+            <!-- <div class="counter flex align-center">
+
+              <a (click)="decreaseQuantity(product)">
+                <ion-icon name="remove-outline"></ion-icon>
+              </a>
+              {{ product.quantity }}
+              <a (click)="increaseQuantity(product)">
+                <ion-icon name="add-outline"></ion-icon>
+              </a>
+            </div> -->
+          </div>
+          <div class="center-col">
+            <div class="productName">
+              <h5>{{ product.product.productName }}</h5>
+            </div>
+            <!-- <div class="productDesc" >
+            <p>{{ product.description }}</p>
+          </div> -->
+            <div class="productPrice" *ngIf="mobile">
+
+              <p>₹{{ product.product.discountPrice }}</p>
+            </div>
+            <div class="productDetail" *ngIf="mobile">
+
+              <a [routerLink]="['../product-details',product.product._id]">View Details<span> <ion-icon
+                    name="chevron-forward-outline"></ion-icon></span></a>
+            </div>
+
+            <!-- <div class="removeButton">
+              <a (click)="removeProduct(product)">
+                <ion-icon slot="end" name="trash"></ion-icon>
+              </a>
+            </div> -->
+          </div>
+          <div class="right-col">
+            <div class="productPrice">
+
+              <p>₹{{ product.product.price }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-two-col">
+          <div class="counter flex align-center" *ngIf="product.product.stock > 0">
+
+            <a (click)="decreaseQuantity(product)">
+              <ion-icon name="remove-outline"></ion-icon>
+            </a>
+            {{ product.quantity }}
+            <a (click)="increaseQuantity(product)">
+              <ion-icon name="add-outline"></ion-icon>
+            </a>
+          </div>
+          <div class="counter flex align-center" *ngIf="product.product.stock <= 0">
+            <p >Out of stock</p>
+          </div>
+          <div class="removeButton">
+            <a (click)="removeProduct(product)">
+              <ion-icon slot="end" name="trash"></ion-icon>
+            </a>
+          </div>
+        </div>
+
+      </ion-item>
+    </ion-list>
+
+  </ng-container>
+  <ng-container *ngIf="cartData && !cartData.length">
+    <div class="empty">
+      <h3>Your cart is empty</h3>
+    </div>
+  </ng-container>
+</ion-content>
+<ion-footer *ngIf="cartData.length && getTotalPrice()">
+  <ion-toolbar>
+    <div class="total-price-container">
+
+      <div class="cartFooter">
+        <div class="footer-box">
+          <div class="footer-left">
+            <h5>Total Price:</h5>
+          </div>
+          <div class="footer-right">
+            <p>₹{{ getTotalPrice() }}</p>
+          </div>
+        </div>
+      </div>
+      <ion-button expand="full" color="primary" routerLink="/checkout">Checkout<ion-icon
+          name="arrow-forward-outline"></ion-icon></ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

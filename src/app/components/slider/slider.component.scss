@@ -1,0 +1,23 @@
+.slider-section {
+    padding-top: 16px;
+    
+    .slide-bg.bg {
+        height: 300px;
+        width: 100%;
+        background-size: contain;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .slider-section {
+        padding-top: 10px;
+
+        .slide-bg.bg {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+        }
+    }
+}
