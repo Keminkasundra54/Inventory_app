@@ -268,16 +268,6 @@ export class ProductDetailsPage implements OnInit {
       this.isToastOpen = true;
 
     }
-    // this.wishlist.addWishList(obj).subscribe({
-    //   next: (res: any) => {
-    //     if(res){
-    //       this.getProduct(this.selectedProduct)
-    //     }
-    //   },
-    //   error:(err)=>{
-    //     console.error(err);
-
-    //   }
-    // })
+    
   }
 }
