@@ -20,7 +20,7 @@
         <div class="product-name">
           <h5>{{productData?.productName}}</h5>
         </div>
-       
+
       </div>
       <div class="product-header-right">
         <a class="addWish" (click)="addWishList(productData._id)" *ngIf="wishList == false">
@@ -74,12 +74,20 @@
           <p>{{productData.description}}</p>
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.color">
+      <div class="product-box" *ngIf="productData.productData.length">
         <div class="product-title">
           <h4>Color</h4>
         </div>
-        <div class="product-desc" >
-          <p>{{productData.color}}</p>
+        <div class="product-desc">
+          <!-- <p>{{productData.color}}</p> -->
+          <ion-buttons slot="start">
+            <ng-container *ngFor="let product of productData.productData">
+              <ion-button >
+                <ion-icon slot="start" name="add">product.color</ion-icon>
+              </ion-button>
+            </ng-container>
+          </ion-buttons>
+
         </div>
       </div>
       <div class="product-box" *ngIf="productData.size">
@@ -92,17 +100,14 @@
       </div>
       <div class="proButtons">
 
-        <ion-button color="primary" *ngIf="cartBool == false" (click)="addToCart(productData._id)">Add to cart</ion-button>
+        <ion-button color="primary" *ngIf="cartBool == false" (click)="addToCart(productData._id)">Add to
+          cart</ion-button>
         <ion-button color="primary" *ngIf="cartBool == true" disabled>Already in cart</ion-button>
         <ion-button color="danger" (click)="buyNow(productData._id)">Buy now</ion-button>
       </div>
     </div>
- 
+
   </section>
-  <ion-toast
-    [isOpen]="isToastOpen"
-    message="Please login for this feature"
-    [duration]="2000"
-    (didDismiss)="isToastOpen = false"
-  ></ion-toast>
+  <ion-toast [isOpen]="isToastOpen" message="Please login for this feature" [duration]="2000"
+    (didDismiss)="isToastOpen = false"></ion-toast>
 </ion-content>
