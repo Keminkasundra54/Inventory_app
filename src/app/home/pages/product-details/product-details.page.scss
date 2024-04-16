@@ -10,7 +10,8 @@ section {
             // width: 100%;
 
             height: 40vh;
-            width: auto;
+            width: 100%;
+
             img {
                 display: block;
                 width: 100%;
@@ -24,9 +25,10 @@ section {
         justify-content: space-between;
         align-items: center;
         padding-top: 10px;
+
         .product-header-left {
             width: calc(100% - 50px);
-          
+
         }
 
         .product-header-right {
@@ -54,7 +56,7 @@ section {
             .addWish {
                 span {
                     svg {
-                        path{
+                        path {
 
                             stroke: var(--ion-color-danger);
                             fill: transparent;
@@ -81,6 +83,7 @@ section {
 
     .main-details-sec {
         padding-top: 15px;
+
         .main-first-sec {
             display: flex;
             justify-content: space-between;
@@ -115,18 +118,21 @@ section {
             }
 
         }
-        .first-right{
-            .stock{
-                p{
+
+        .first-right {
+            .stock {
+                p {
                     font-weight: 600;
                     color: var(--ion-color-secondary);
-                    span{
+
+                    span {
                         font-weight: 500;
                         font-size: 10px;
                     }
                 }
             }
         }
+
         .product-box {
             padding-top: 10px;
 
@@ -136,11 +142,16 @@ section {
                 // color: var(--darkGrey);
             }
 
-            .product-desc p {
-                font-size: 16px;
+            .product-desc {
+                padding-top: 5px;
+
+                p {
+                    font-size: 16px;
+                }
             }
         }
-        .proButtons{
+
+        .proButtons {
             padding-top: 15px;
         }
     }

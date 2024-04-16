@@ -226,18 +226,60 @@ export class ProductsPage implements OnInit {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
-  findMinMax(arr: any) {
-    let min = arr[0].price, max = arr[0].price;
+  // findMinMax(arr: any) {
+  //   console.log(arr);
 
-    for (let i = 1, len = arr.length; i < len; i++) {
-      let v = arr[i].price;
-      min = (v < min) ? v : min;
-      max = (v > max) ? v : max;
+  //   // let min = arr[0].price, max = arr[0].price;
+
+  //   // for (let i = 1, len = arr.length; i < len; i++) {
+  //   //   let v = arr[i].price;
+  //   //   min = (v < min) ? v : min;
+  //   //   max = (v > max) ? v : max;
+  //   // }
+  //   // console.log(min, max);
+
+  //   // return [min, max];
+
+  //   if (arr.length === 0) {
+  //     return { minPrice: 0, maxPrice: 0 }; 
+  //   }
+
+  //   let minPrice = Infinity; 
+  //   let maxPrice = -Infinity; 
+
+  //   arr.forEach((product: any) => {
+  //     product.productData.forEach((data: any) => {
+  //       if (data.price < minPrice) {
+  //         minPrice = data.price;
+  //       }
+  //       if (data.price > maxPrice) {
+  //         maxPrice = data.price;
+  //       }
+  //     });
+  //   });
+
+  //   return [ minPrice, maxPrice ];
+  // }
+
+  findMinMax(arr: any) {
+    console.log(arr);
+    
+    let min = arr[0].productData[0].price;
+    let max = arr[0].productData[0].price;
+
+    for (let i = 0; i < arr.length; i++) {
+        const productData = arr[i].productData;
+        for (let j = 0; j < productData.length; j++) {
+            const price = productData[j].price;
+            min = (price < min) ? price : min;
+            max = (price > max) ? price : max;
+        }
     }
+    
     console.log(min, max);
 
     return [min, max];
-  }
+}
   selectedCat(event: any) {
     console.log(event, 'yessssss');
     this.getProduct(event)
@@ -246,25 +288,26 @@ export class ProductsPage implements OnInit {
     for (const product of products) {
       // Extract size
       console.log(product);
-      if(product.size){
+      if (product.productData) {
 
-        product.size.forEach((size: any) => {
-  
-          if (size && !this.sizes.includes(size)) {
-            this.sizes.push(size);
+        product.productData.forEach((size: any) => {
+
+          if (size && !this.sizes.includes(size.size)) {
+            this.sizes.push(size.size);
           }
         })
+
       }
       // Extract color
-      if(product.color){
+      if (product.productData) {
 
-      product.color.forEach((color: any) => {
+        product.productData.forEach((color: any) => {
 
-        if (color && !this.colors.includes(color)) {
-          this.colors.push(color);
-        }
-      });
-    }
+          if (color && !this.colors.includes(color.color)) {
+            this.colors.push(color.color);
+          }
+        });
+      }
 
     }
   }

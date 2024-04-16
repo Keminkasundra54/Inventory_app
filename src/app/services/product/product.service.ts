@@ -49,4 +49,11 @@ export class ProductService {
 
     return this.http.post(url,data, { observe: 'response' })
   }
+
+  getOneProductByFilter(data:any){
+    let url = this.url + 'getOneProductByFilter'
+    // this.loader.showLoading()
+
+    return this.http.post(url,data, { observe: 'response' })
+  }
 }

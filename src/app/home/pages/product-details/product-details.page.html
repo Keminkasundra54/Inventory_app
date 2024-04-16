@@ -45,7 +45,7 @@
     </div>
     <swiper-container [slidesPerView]="'1'" [spaceBetween]="20" [modules]="swiperModules" [pagination]="true">
 
-      <swiper-slide *ngFor="let slide of productData.images" class="swiperRelative">
+      <swiper-slide *ngFor="let slide of selectedInrProductData.images" class="swiperRelative">
         <img src="{{link + slide}}" alt="">
       </swiper-slide>
     </swiper-container>
@@ -56,13 +56,13 @@
       <div class="main-first-sec">
         <div class="first-left">
           <div class="price">
-            <p>₹{{productData.discountPrice}}<span class="priceSpan">₹{{productData.price}} <span
-                  class="disc">{{productData.discount}}% Disc</span> </span></p>
+            <p>₹{{selectedInrProductData.discountPrice}}<span class="priceSpan">₹{{selectedInrProductData.price}} <span
+                  class="disc">{{selectedInrProductData.discount}}% Disc</span> </span></p>
           </div>
         </div>
         <div class="first-right">
           <div class="stock">
-            <p>{{productData.stock}}<span> in stock</span></p>
+            <p>{{selectedInrProductData.stock}}<span> in stock</span></p>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
           <p>{{productData.description}}</p>
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.productData.length">
+      <div class="product-box" *ngIf="productData.productData">
         <div class="product-title">
           <h4>Color</h4>
         </div>
@@ -82,28 +82,47 @@
           <!-- <p>{{productData.color}}</p> -->
           <ion-buttons slot="start">
             <ng-container *ngFor="let product of productData.productData">
-              <ion-button >
-                <ion-icon slot="start" name="add">product.color</ion-icon>
+              <ion-button fill="{{product.color == selectedInrProductData.color && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
+                (click)="setSelectedProduct(product._id)">
+                {{product.color}}
               </ion-button>
             </ng-container>
           </ion-buttons>
 
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.size">
+      <div class="product-box" *ngIf="productData.productData">
+        <div class="product-title">
+          <h4>Size</h4>
+        </div>
+        <div class="product-desc">
+          <!-- <p>{{productData.color}}</p> -->
+          <ion-buttons slot="start">
+            <ng-container *ngFor="let product of productData.productData">
+              <ion-button fill="{{product.size == selectedInrProductData.size && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
+                >
+                {{product.size}}
+              </ion-button>
+            </ng-container>
+          </ion-buttons>
+
+        </div>
+      </div>
+      <!-- <div class="product-box" *ngIf="productData.size">
         <div class="product-title">
           <h4>Size</h4>
         </div>
         <div class="product-desc">
           <p>{{productData.size}}</p>
         </div>
-      </div>
+      </div> -->
       <div class="proButtons">
 
-        <ion-button color="primary" *ngIf="cartBool == false" (click)="addToCart(productData._id)">Add to
+        <ion-button color="primary" *ngIf="cartBool == false"
+          (click)="addToCart(productData._id, selectedInrProductData._id)">Add to
           cart</ion-button>
         <ion-button color="primary" *ngIf="cartBool == true" disabled>Already in cart</ion-button>
-        <ion-button color="danger" (click)="buyNow(productData._id)">Buy now</ion-button>
+        <ion-button color="danger" (click)="buyNow(productData._id, selectedInrProductData._id)">Buy now</ion-button>
       </div>
     </div>
 

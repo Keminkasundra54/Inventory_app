@@ -15,16 +15,17 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class ProductDetailsPage implements OnInit {
   selectedProduct: any
   productData: any = []
+  selectedInrProductData: any = []
   swiperModules = [IonicSlides];
-  link :any
+  link: any
   userId: any
   prevUrl: boolean = false
   isToastOpen = false;
-  wishListData:any = []
-  cartListData:any = []
-  wishList:boolean = false
-  cartBool:boolean = false
-  constructor(private route: ActivatedRoute, private product: ProductService, private wishlist: WishlistService, private cart: CartService, private router: Router , private auth:AuthService) {
+  wishListData: any = []
+  cartListData: any = []
+  wishList: boolean = false
+  cartBool: boolean = false
+  constructor(private route: ActivatedRoute, private product: ProductService, private wishlist: WishlistService, private cart: CartService, private router: Router, private auth: AuthService) {
     effect(() => {
       this.link = this.auth.url()
     })
@@ -32,17 +33,17 @@ export class ProductDetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    
+
     if (localStorage.getItem('userData')) {
-  
+
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
     }
-    if(this.userId){
+    if (this.userId) {
       this.getWishlist()
       this.getCartlist()
     }
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
       this.getWishlist()
@@ -68,22 +69,22 @@ export class ProductDetailsPage implements OnInit {
         console.log('current url', events[1].urlAfterRedirects);
       });
 
-      this.selectedProduct = this.route.snapshot.paramMap.get('id')!;
-      console.log(this.selectedProduct,);
-  
-      if (this.selectedProduct) {
-        this.getProduct(this.selectedProduct)
-      }
-  
-      if (localStorage.getItem('userData')) {
-  
-        this.userId = JSON.parse(localStorage.getItem('userData')!)._id
-      }
-  
-      if(this.userId){
-        this.getWishlist()
-        this.getCartlist()
-      }
+    this.selectedProduct = this.route.snapshot.paramMap.get('id')!;
+    console.log(this.selectedProduct,);
+
+    if (this.selectedProduct) {
+      this.getProduct(this.selectedProduct)
+    }
+
+    if (localStorage.getItem('userData')) {
+
+      this.userId = JSON.parse(localStorage.getItem('userData')!)._id
+    }
+
+    if (this.userId) {
+      this.getWishlist()
+      this.getCartlist()
+    }
   }
   getProduct(id: any) {
     let obj = {
@@ -94,7 +95,9 @@ export class ProductDetailsPage implements OnInit {
         if (res) {
           this.productData = res.body.data[0]
 
-          
+          if (res.body.data[0] && res.body.data[0].productData)
+            this.selectedInrProductData = res.body.data[0].productData[0]
+
         }
       },
       error: (err) => {
@@ -109,25 +112,25 @@ export class ProductDetailsPage implements OnInit {
     }
     this.wishlist.getWishList(obj).subscribe({
       next: (res: any) => {
-        if (res ) {
+        if (res) {
           console.log(res);
-          
+
           this.wishListData = res.body.data
           console.log(this.wishListData);
-          if(this.wishListData.length){
+          if (this.wishListData.length) {
 
-            this.wishListData.forEach((value:any) => {
+            this.wishListData.forEach((value: any) => {
               console.log(value);
-              if(value){
-                
-                if(value._id == this.selectedProduct){
-                  this.wishList = true  
-                }else{
+              if (value) {
+
+                if (value._id == this.selectedProduct) {
+                  this.wishList = true
+                } else {
                   this.wishList = false
                 }
               }
             });
-          }else{
+          } else {
             this.wishList = false
 
           }
@@ -145,21 +148,21 @@ export class ProductDetailsPage implements OnInit {
     }
     this.cart.getCart(obj).subscribe({
       next: (res: any) => {
-        if (res ) {
+        if (res) {
           console.log(res);
-          
+
           this.cartListData = res.body.data
           console.log(this.cartListData);
-          if(this.cartListData.length){
+          if (this.cartListData.length) {
 
-            this.cartListData.forEach((value:any) => {
-              if(value.product._id == this.selectedProduct){
-                this.cartBool = true  
-              }else{
+            this.cartListData.forEach((value: any) => {
+              if (value.product._id == this.selectedProduct) {
+                this.cartBool = true
+              } else {
                 this.cartBool = false
               }
             });
-          }else{
+          } else {
             this.cartBool = false
           }
         }
@@ -193,7 +196,7 @@ export class ProductDetailsPage implements OnInit {
 
     }
   }
-  
+
   removeWishList(id: any) {
     let obj = {
       productId: id,
@@ -214,10 +217,11 @@ export class ProductDetailsPage implements OnInit {
       }
     })
   }
-  addToCart(id: any) {
+  addToCart(id: any, inrId: any) {
     if (this.userId) {
       let obj = {
         productId: id,
+        detailId: inrId,
         userId: this.userId
       }
       this.cart.addToCart(obj).subscribe({
@@ -240,10 +244,11 @@ export class ProductDetailsPage implements OnInit {
 
     }
   }
-  buyNow(id: any) {
+  buyNow(id: any, inrId: any) {
     if (this.userId) {
       let obj = {
         productId: id,
+        detailId: inrId,
         userId: this.userId
       }
       this.cart.addToCart(obj).subscribe({
@@ -268,6 +273,14 @@ export class ProductDetailsPage implements OnInit {
       this.isToastOpen = true;
 
     }
-    
+
+  }
+
+  setSelectedProduct(id: any) {
+    this.productData.productData.forEach((product:any) => {
+        if(product._id == id){
+          this.selectedInrProductData = product
+        }
+    });
   }
 }

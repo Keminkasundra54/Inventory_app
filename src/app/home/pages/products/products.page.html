@@ -275,8 +275,8 @@
                       [routerLink]="['../product-details',product._id]">
                       <div class="three-col flex align-center">
                         <div class="left-col">
-                          <ion-thumbnail slot="start" *ngIf="product && product.images && product.images.length">
-                            <img src="{{link + product?.images[0]}}" alt="Product Image">
+                          <ion-thumbnail slot="start" *ngIf="product && product.productData && product.productData[0].images.length">
+                            <img src="{{link + product.productData[0].images[0]}}" alt="Product Image">
                           </ion-thumbnail>
                         </div>
                         <div class="center-col">
@@ -288,7 +288,7 @@
                       </div> -->
                           <div class="productPrice" *ngIf="mobile">
 
-                            <p>₹{{ product.discountPrice }}</p>
+                            <p>₹{{ product.productData[0].discountPrice }}</p>
                           </div>
                           <div class="productDetail" *ngIf="mobile">
 
@@ -299,7 +299,7 @@
                         <div class="right-col">
                           <div class="productPrice">
 
-                            <p>₹{{ product.discountPrice }}</p>
+                            <p>₹{{ product.productData[0].discountPrice }}</p>
                           </div>
                         </div>
                       </div>
