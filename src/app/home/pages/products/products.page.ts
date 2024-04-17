@@ -78,7 +78,6 @@ export class ProductsPage implements OnInit {
     }
     this.menuController.close()
 
-    console.log('constructor called');
 
   }
   handleRefresh(event: any) {
@@ -116,7 +115,6 @@ export class ProductsPage implements OnInit {
 
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
     }
-    console.log('init called');
 
   }
   ionViewDidEnter() {
@@ -287,7 +285,6 @@ export class ProductsPage implements OnInit {
   extractSizesAndColors(products: any[]) {
     for (const product of products) {
       // Extract size
-      console.log(product);
       if (product.productData) {
 
         product.productData.forEach((size: any) => {

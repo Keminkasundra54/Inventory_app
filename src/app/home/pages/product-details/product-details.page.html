@@ -56,7 +56,7 @@
       <div class="main-first-sec">
         <div class="first-left">
           <div class="price">
-            <p>₹{{selectedInrProductData.discountPrice}}<span class="priceSpan">₹{{selectedInrProductData.price}} <span
+            <p>₹{{selectedInrProductData.discountPrice | number : '1.0-2'}}<span class="priceSpan">₹{{selectedInrProductData.price}} <span
                   class="disc">{{selectedInrProductData.discount}}% Disc</span> </span></p>
           </div>
         </div>
@@ -74,15 +74,15 @@
           <p>{{productData.description}}</p>
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.productData">
+      <div class="product-box" *ngIf="selectedInrProductData">
         <div class="product-title">
           <h4>Color</h4>
         </div>
         <div class="product-desc">
           <ion-buttons slot="start">
             <ng-container *ngFor="let product of colorList">
-              <ion-button fill="{{product.color == selectedInrProductData.color && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
-                (click)="setSelectedProduct(product._id, product.color)">
+              <ion-button fill="{{product.color == selectedInrProductData.color ? 'solid' : 'outline'}} " color="primary"
+                (click)="setSelectedProduct(product.color)">
                 {{product.color}}
               </ion-button>
             </ng-container>
@@ -90,7 +90,7 @@
 
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.productData">
+      <div class="product-box" *ngIf="selectedInrProductData">
         <div class="product-title">
           <h4>Size</h4>
         </div>
@@ -98,7 +98,7 @@
           <ion-buttons slot="start">
             <ng-container *ngFor="let product of sizeList">
               <ion-button fill="{{product.size == selectedInrProductData.size && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
-                (click)="selectSize(product._id)">
+                (click)="selectSize(product._id, product.color)">
                 {{product.size}}
               </ion-button>
             </ng-container>

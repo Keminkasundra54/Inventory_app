@@ -25,8 +25,8 @@
       <ion-item lines="none" *ngFor="let product of cartData.reverse()">
         <div class="three-col flex align-center">
           <div class="left-col">
-            <ion-thumbnail slot="start">
-              <img [src]="link + product.product.images[0]" alt="Product Image">
+            <ion-thumbnail slot="start" *ngIf="product && product.product.productData">
+              <img [src]="link + product.product.productData[0].images[0]" alt="Product Image">
             </ion-thumbnail>
             <!-- <div class="counter flex align-center">
 
@@ -48,7 +48,7 @@
           </div> -->
             <div class="productPrice" *ngIf="mobile">
 
-              <p>₹{{ product.product.discountPrice }}</p>
+              <p>₹{{ product.product.productData[0].discountPrice }}</p>
             </div>
             <div class="productDetail" *ngIf="mobile">
 
@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="bottom-two-col">
-          <div class="counter flex align-center" *ngIf="product.product.stock > 0">
+          <div class="counter flex align-center" *ngIf="product.product.productData[0].stock > 0">
 
             <a (click)="decreaseQuantity(product)">
               <ion-icon name="remove-outline"></ion-icon>
