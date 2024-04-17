@@ -163,7 +163,7 @@
       <ng-container *ngIf="results.length">
         <ion-item *ngFor="let result of results" [routerLink]="['../product-details',result._id]">
           <ion-thumbnail slot="start">
-            <img [src]="link + result.images[0]" alt="Product Image">
+            <img [src]="link + result.productData[0].images[0]" alt="Product Image">
           </ion-thumbnail>
           <ion-label>
             <h6>{{result.productName}}</h6>

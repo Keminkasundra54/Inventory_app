@@ -79,11 +79,10 @@
           <h4>Color</h4>
         </div>
         <div class="product-desc">
-          <!-- <p>{{productData.color}}</p> -->
           <ion-buttons slot="start">
-            <ng-container *ngFor="let product of productData.productData">
+            <ng-container *ngFor="let product of colorList">
               <ion-button fill="{{product.color == selectedInrProductData.color && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
-                (click)="setSelectedProduct(product._id)">
+                (click)="setSelectedProduct(product._id, product.color)">
                 {{product.color}}
               </ion-button>
             </ng-container>
@@ -96,11 +95,10 @@
           <h4>Size</h4>
         </div>
         <div class="product-desc">
-          <!-- <p>{{productData.color}}</p> -->
           <ion-buttons slot="start">
-            <ng-container *ngFor="let product of productData.productData">
+            <ng-container *ngFor="let product of sizeList">
               <ion-button fill="{{product.size == selectedInrProductData.size && product._id == selectedInrProductData._id ? 'solid' : 'outline'}} " color="primary"
-                >
+                (click)="selectSize(product._id)">
                 {{product.size}}
               </ion-button>
             </ng-container>
@@ -108,14 +106,7 @@
 
         </div>
       </div>
-      <!-- <div class="product-box" *ngIf="productData.size">
-        <div class="product-title">
-          <h4>Size</h4>
-        </div>
-        <div class="product-desc">
-          <p>{{productData.size}}</p>
-        </div>
-      </div> -->
+     
       <div class="proButtons">
 
         <ion-button color="primary" *ngIf="cartBool == false"

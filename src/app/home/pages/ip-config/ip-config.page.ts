@@ -13,7 +13,7 @@ export class IpConfigPage implements OnInit {
   constructor(private fb:FormBuilder , private auth:AuthService, private router:Router) {
 
     this.ipForm = this.fb.group({
-      ipData:[,Validators.required]
+      ipData:['http://192.168.1.17:8080/',Validators.required]
     })
    }
 

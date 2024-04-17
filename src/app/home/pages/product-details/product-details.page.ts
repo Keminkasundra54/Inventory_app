@@ -21,6 +21,8 @@ export class ProductDetailsPage implements OnInit {
   userId: any
   prevUrl: boolean = false
   isToastOpen = false;
+  colorList: any = []
+  sizeList: any = []
   wishListData: any = []
   cartListData: any = []
   wishList: boolean = false
@@ -98,6 +100,7 @@ export class ProductDetailsPage implements OnInit {
           if (res.body.data[0] && res.body.data[0].productData)
             this.selectedInrProductData = res.body.data[0].productData[0]
 
+          this.extractSizesAndColors(this.productData.productData)
         }
       },
       error: (err) => {
@@ -105,6 +108,44 @@ export class ProductDetailsPage implements OnInit {
 
       }
     })
+  }
+  extractSizesAndColors(products: any[]) {
+    console.log(products);
+       // Clearing existing lists
+       this.colorList = [];
+       this.sizeList = [];
+    for (const product of products) {
+
+      console.log(product);
+
+      if (product) {
+
+        
+        if (product && !this.colorList.find((x:any) => x.color === product.color)) {
+          this.colorList.push({_id:product._id,color:product.color});
+        }
+      }
+      console.log(this.colorList);
+
+      
+      
+    }
+      const productsWithSelectedColor = this.productData.productData.filter((product:any) => product.color === this.selectedInrProductData.color);
+      console.log(this.selectedInrProductData);
+    //   for (const product of productsWithSelectedColor) {
+
+    //     if (product && !this.sizeList.includes({_id:product._id,size:product.size})) {
+    //       this.sizeList.push(product.size);
+    //     }
+    //   }
+    // console.log(this.sizeList);
+    for (const product of productsWithSelectedColor) {
+      // Checking if the product size with id is not already in the size list
+      if (!this.sizeList.find((size:any) => size._id === product._id && size.size === product.size)) {
+          this.sizeList.push({_id: product._id, size: product.size});
+      }
+  }
+  console.log(this.sizeList);
   }
   getWishlist() {
     let obj = {
@@ -276,11 +317,23 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-  setSelectedProduct(id: any) {
-    this.productData.productData.forEach((product:any) => {
-        if(product._id == id){
-          this.selectedInrProductData = product
-        }
+  setSelectedProduct(id: any, color:any) {
+    console.log(this.productData);
+    
+    this.productData.productData.forEach((product: any) => {
+      console.log(product);
+      if(product.color == color){
+        console.log(product, 'inr');
+        
+      }
+      // if (product._id == id) {
+      //   this.selectedInrProductData = product
+      //   this.extractSizesAndColors(this.productData.productData)
+      // }
     });
+  }
+  selectSize(id:any){
+    console.log(id);
+    
   }
 }
