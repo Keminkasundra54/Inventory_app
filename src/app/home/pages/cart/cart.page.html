@@ -52,8 +52,8 @@
             </div>
             <div class="productDetail" *ngIf="mobile">
 
-              <a [routerLink]="['../product-details',product.product._id]">View Details<span> <ion-icon
-                    name="chevron-forward-outline"></ion-icon></span></a>
+                <a [routerLink]="['../product-details',product.product._id, product.product.productData[0]._id ]">View Details<span> <ion-icon
+                      name="chevron-forward-outline"></ion-icon></span></a>
             </div>
 
             <!-- <div class="removeButton">

@@ -141,7 +141,8 @@ export class ProductsPage implements OnInit {
     this.product.getProductByCategory(obj).subscribe({
       next: (res: any) => {
         if (res) {
-
+          this.products = []
+          this.data = []
           this.data = res.body.data
 
           this.products = res.body.data
@@ -374,7 +375,10 @@ export class ProductsPage implements OnInit {
     this.product.getProductByFilter(obj).subscribe({
       next: (res: any) => {
         if (res) {
+          this.products = []
+          this.data = res.body.data
           this.products = res.body.data;
+          this.batch()
         }
       },
       error: (err) => {

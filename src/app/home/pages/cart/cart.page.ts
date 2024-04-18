@@ -131,10 +131,12 @@ export class CartPage implements OnInit {
   getTotalPrice(): number {
     let totalPrice = 0;
     for (const product of this.cartData) {
+      console.log(product);
+      
       // Assuming product.price is the original price and product.product.discountedPrice is the discounted price
-      if(product.product.stock > 0){
+      if(product.product.productData[0].stock > 0){
 
-        totalPrice += product.product.discountPrice ? product.product.discountPrice * product.quantity : product.product.price * product.quantity;
+        totalPrice += product.product.productData[0].discountPrice ? product.product.productData[0].discountPrice * product.quantity : product.product.productData[0].price * product.quantity;
       }
     }
     return totalPrice;
@@ -145,8 +147,8 @@ export class CartPage implements OnInit {
 
     for (const product of this.cartData) {
 
-      const price = product.product.price;
-      const discount = product.product.discountPrice;
+      const price = product.product.productData[0].price;
+      const discount = product.product.productData[0].discountPrice;
       const discountedPrice = price * (discount / 100);
       console.log(discountedPrice);
       

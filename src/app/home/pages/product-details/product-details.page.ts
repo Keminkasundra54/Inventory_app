@@ -57,6 +57,9 @@ export class ProductDetailsPage implements OnInit {
     }, 2000);
   }
   ionViewDidEnter() {
+    if(this.route.snapshot.paramMap.get('detailId')!){
+      this.prevUrl = true
+    }
     this.router.events
       .pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise())
       .subscribe((events: RoutesRecognized[]) => {
@@ -72,6 +75,7 @@ export class ProductDetailsPage implements OnInit {
       });
 
     this.selectedProduct = this.route.snapshot.paramMap.get('id')!;
+
     console.log(this.selectedProduct,);
 
     if (this.selectedProduct) {
@@ -97,12 +101,24 @@ export class ProductDetailsPage implements OnInit {
         if (res) {
           this.productData = res.body.data[0]
 
-          if (res.body.data[0] && res.body.data[0].productData){
+          if (res.body.data[0] && res.body.data[0].productData) {
 
-            this.selectedInrProductData = res.body.data[0].productData[0]
-            console.log(this.selectedInrProductData, 'firstinit');
-            // this.setSelectedProduct(this.selectedInrProductData.color)
-          this.extractSizesAndColors(this.productData.productData)
+            console.log(this.route.snapshot.paramMap.get('detailId')!);
+            if (this.route.snapshot.paramMap.get('detailId')!) {
+              this.productData.productData.forEach((detail: any) => {
+                if (detail._id == this.route.snapshot.paramMap.get('detailId')!) {
+                  this.selectedInrProductData = detail
+                  this.extractSizesAndColors(this.productData.productData)
+
+                }
+              });
+            } else {
+
+              this.selectedInrProductData = res.body.data[0].productData[0]
+              console.log(this.selectedInrProductData, 'firstinit');
+              // this.setSelectedProduct(this.selectedInrProductData.color)
+              this.extractSizesAndColors(this.productData.productData)
+            }
           }
         }
       },
@@ -112,42 +128,42 @@ export class ProductDetailsPage implements OnInit {
       }
     })
   }
-  setSelectedProduct(color:any) {
+  setSelectedProduct(color: any) {
     console.log(this.productData);
-    
-    let mainColor:any = []
+
+    let mainColor: any = []
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(color);
-      
-      if(product.color == color){
+
+      if (product.color == color) {
         console.log(product, 'inr');
         mainColor.push(product)
       }
       console.log(mainColor);
-      
-      
+
+
       // if (product._id == id) {
       //   this.selectedInrProductData = product
       console.log(this.productData);
-      
+
       // }
       if (mainColor.length > 0) {
         this.selectedInrProductData = mainColor[0];
         console.log('Selected Product:', this.selectedInrProductData); // Log selectedInrProductData
         this.extractSizesAndColors(this.productData.productData);
-    }
+      }
       // this.selectedInrProductData = mainColor[0]
       // console.log(this.selectedInrProductData);
 
       // this.extractSizesAndColors(this.productData.productData)
     });
   }
-  selectSize(id:any, color:any){
+  selectSize(id: any, color: any) {
     console.log(this.productData);
-      console.log(id);
-      
-    let mainColor:any = []
+    console.log(id);
+
+    let mainColor: any = []
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(this.selectedInrProductData);
@@ -155,56 +171,56 @@ export class ProductDetailsPage implements OnInit {
       console.log(id);
       console.log(product.color);
       console.log(this.selectedInrProductData.color);
-      
-      if(product._id == id && product.color == color){
+
+      if (product._id == id && product.color == color) {
         console.log(product, 'inr');
         mainColor.push(product)
         console.log(mainColor);
       }
-      
+
       // this.selectedInrProductData = mainColor[0]
       // console.log(this.selectedInrProductData,'selected product');
       if (mainColor.length > 0) {
         this.selectedInrProductData = mainColor[0];
         console.log('Selected Product:', this.selectedInrProductData); // Log selectedInrProductData
         this.extractSizesAndColors(this.productData.productData);
-    }
+      }
       // if (product._id == id) {
       //   this.selectedInrProductData = product
-        // this.extractSizesAndColors(this.productData.productData)
+      // this.extractSizesAndColors(this.productData.productData)
       // }
     });
-    
+
   }
   extractSizesAndColors(products: any) {
     console.log('extractSizesAndColors - selectedInrProductData:', this.selectedInrProductData); // Log selectedInrProductData
     console.log('extractSizesAndColors - products:', products); // Log products array
     // Rest 
-       this.colorList = [];
-       this.sizeList = [];
+    this.colorList = [];
+    this.sizeList = [];
     for (const product of products) {
 
       console.log(product);
 
       if (product) {
 
-        
-        if (product && !this.colorList.find((x:any) => x.color === product.color)) {
+
+        if (product && !this.colorList.find((x: any) => x.color === product.color)) {
           this.colorList.push(product);
         }
       }
       console.log(this.colorList);
 
-      
-      
+
+
       // this.selectedInrProductData = this.colorList[0]
-    }   
+    }
     console.log(this.selectedInrProductData);
     let productsWithSelectedColor
-      
-        productsWithSelectedColor = products.filter((product:any) => product.color === this.selectedInrProductData.color);
-        console.log(this.selectedInrProductData);
-  
+
+    productsWithSelectedColor = products.filter((product: any) => product.color === this.selectedInrProductData.color);
+    console.log(this.selectedInrProductData);
+
     //   for (const product of productsWithSelectedColor) {
 
     //     if (product && !this.sizeList.includes({_id:product._id,size:product.size})) {
@@ -214,11 +230,11 @@ export class ProductDetailsPage implements OnInit {
     // console.log(this.sizeList);
     for (const product of productsWithSelectedColor) {
       // Checking if the product size with id is not already in the size list
-      if (!this.sizeList.find((size:any) => size._id === product._id && size.size === product.size)) {
-          this.sizeList.push(product);
+      if (!this.sizeList.find((size: any) => size._id === product._id && size.size === product.size)) {
+        this.sizeList.push(product);
       }
-  }
-  console.log(this.sizeList);
+    }
+    console.log(this.sizeList);
   }
   getWishlist() {
     let obj = {
@@ -339,7 +355,7 @@ export class ProductDetailsPage implements OnInit {
         userId: this.userId
       }
       console.log(inrId);
-      
+
       this.cart.addToCart(obj).subscribe({
         next: (res: any) => {
           if (res) {
@@ -392,5 +408,5 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
- 
+
 }

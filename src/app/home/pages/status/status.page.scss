@@ -3,7 +3,8 @@ ion-list {
 
     ion-item {
         margin: 10px auto;
-        min-height: 80px;
+        min-height: 92px;
+        max-height: 92px;
         overflow: auto;
         border-radius: 8px;
         --padding-start: 0;
@@ -31,10 +32,12 @@ ion-list {
                     height: 100%;
                     width: 100%;
                     border-radius: 12px;
+                    max-height: 80px;
 
                     img {
                         height: 100%;
                         width: 100%;
+                        object-fit: fill;
                     }
                 }
                

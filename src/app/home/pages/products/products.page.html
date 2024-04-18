@@ -308,7 +308,8 @@
                     </ion-item>
                   </ng-container>
                 </ion-list>
-                <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" *ngIf="data.length != products.length">
+                <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+                <!-- <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" *ngIf="data.length != products.length"> -->
                   <ion-infinite-scroll-content></ion-infinite-scroll-content>
                 </ion-infinite-scroll>
               </div>

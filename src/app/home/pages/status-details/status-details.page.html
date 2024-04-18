@@ -46,7 +46,7 @@
     </div>
     <swiper-container [slidesPerView]="'1'" [spaceBetween]="20" [modules]="swiperModules" [pagination]="true">
 
-      <swiper-slide *ngFor="let slide of productData.images" class="swiperRelative">
+      <swiper-slide *ngFor="let slide of productData.productData[0].images" class="swiperRelative">
         <img src="{{link + slide}}" alt="">
       </swiper-slide>
     </swiper-container>

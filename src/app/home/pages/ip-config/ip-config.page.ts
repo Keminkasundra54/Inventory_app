@@ -15,6 +15,9 @@ export class IpConfigPage implements OnInit {
     this.ipForm = this.fb.group({
       ipData:['http://192.168.1.17:8080/',Validators.required]
     })
+    if(this.ipForm.valid){
+      this.submit()
+    }
    }
 
   ngOnInit() {

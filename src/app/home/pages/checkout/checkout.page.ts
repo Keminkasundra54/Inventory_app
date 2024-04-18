@@ -124,7 +124,7 @@ export class CheckoutPage implements OnInit {
           // this.cartData = res.body.data
           console.log(this.cartData);
           this.cartData = dummy.filter((product) => {
-            return (product.product.stock > 0)
+            return (product.product.productData[0].stock > 0)
           });
           // this.cartData.filter((value:any)=> value.product.stock > 0)
 
@@ -174,10 +174,10 @@ export class CheckoutPage implements OnInit {
   getMainPrice(): number {
     let totalPrice = 0;
     for (const product of this.cartData) {
-      // Assuming product.price is the original price and product.product.discountedPrice is the discounted price
-      if (product.product.stock > 0) {
+      // Assuming product.price is the original price and product.product.productData[0].discountedPrice is the discounted price
+      if (product.product.productData[0].stock > 0) {
 
-        totalPrice += product.product.price * product.quantity;
+        totalPrice += product.product.productData[0].price * product.quantity;
       }
     }
 
@@ -187,9 +187,9 @@ export class CheckoutPage implements OnInit {
     let totalPrice = 0;
     let mainPrice = 0
     for (const product of this.cartData) {
-      if (product.product.stock > 0) {
+      if (product.product.productData[0].stock > 0) {
 
-        totalPrice += product.product.discountPrice ? product.product.discountPrice * product.quantity : product.product.price * product.quantity;
+        totalPrice += product.product.productData[0].discountPrice ? product.product.productData[0].discountPrice * product.quantity : product.product.productData[0].price * product.quantity;
       }
     }
     if (this.promoCode && this.promoCode.isActive) {
@@ -228,10 +228,10 @@ export class CheckoutPage implements OnInit {
     let totalDiscountPrice = 0;
 
     for (const product of this.cartData) {
-      if (product.product.stock > 0) {
+      if (product.product.productData[0].stock > 0) {
 
-        const price = product.product.price;
-        const discountPercentage = product.product.discount;
+        const price = product.product.productData[0].price;
+        const discountPercentage = product.product.productData[0].discount;
         console.log(price, discountPercentage);
 
         if (discountPercentage && discountPercentage < 100) {
@@ -292,10 +292,10 @@ export class CheckoutPage implements OnInit {
         let totalPrice = 0;
         for (const product of this.cartData) {
 
-          if (product.product.stock > 0) {
+          if (product.product.productData[0].stock > 0) {
 
-            // totalPrice += product.product.price * product.quantity;
-            totalPrice += product.product.discountPrice ? product.product.discountPrice * product.quantity : product.product.price * product.quantity;
+            // totalPrice += product.product.productData[0].price * product.quantity;
+            totalPrice += product.product.productData[0].discountPrice ? product.product.productData[0].discountPrice * product.quantity : product.product.productData[0].price * product.quantity;
           }
         }
 
@@ -422,7 +422,7 @@ export class CheckoutPage implements OnInit {
       for (let i = 0; i < this.cartData.length; i++) {
         const product = this.cartData[i];
         let inrObj = {
-          productId: product.product._id,
+          productId: product.product.productData[0]._id,
           quantity: product.quantity
         }
 
@@ -572,6 +572,7 @@ export class CheckoutPage implements OnInit {
         const product = this.cartData[i];
         let inrObj = {
           productId: product.product._id,
+          detailId: product.product.productData[0]._id,
           quantity: product.quantity
         }
 
