@@ -77,7 +77,10 @@ export class ProductDetailsPage implements OnInit {
     this.selectedProduct = this.route.snapshot.paramMap.get('id')!;
 
     console.log(this.selectedProduct,);
-
+    if (this.userId) {
+      this.getWishlist()
+      this.getCartlist()
+    }
     if (this.selectedProduct) {
       this.getProduct(this.selectedProduct)
     }
@@ -87,10 +90,7 @@ export class ProductDetailsPage implements OnInit {
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
     }
 
-    if (this.userId) {
-      this.getWishlist()
-      this.getCartlist()
-    }
+
   }
   getProduct(id: any) {
     let obj = {
@@ -100,7 +100,7 @@ export class ProductDetailsPage implements OnInit {
       next: (res: any) => {
         if (res) {
           this.productData = res.body.data[0]
-
+          this.getCartlist()
           if (res.body.data[0] && res.body.data[0].productData) {
 
             console.log(this.route.snapshot.paramMap.get('detailId')!);
@@ -118,28 +118,36 @@ export class ProductDetailsPage implements OnInit {
               console.log(this.selectedInrProductData, 'firstinit');
               // this.setSelectedProduct(this.selectedInrProductData.color)
               this.extractSizesAndColors(this.productData.productData)
+              let foundMatchingItem = false; 
+              if (this.selectedInrProductData) {
 
-              this.cartListData.forEach((value: any) => {
-                console.log(value);
-          
-                if (value.product._id == this.selectedProduct) {
-          
-                  value.product.productData.forEach((inrData: any) => {
-                    console.log(inrData);
-                    console.log(this.selectedInrProductData);
-                    
-                    if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
-                      this.cartBool = true
-                    } else {
-                      this.cartBool = false
-                    }
-                    
-                  });
-                  // this.cartBool = true
-                } else {
-                  this.cartBool = false
-                }
-              });
+                this.cartListData.forEach((value: any) => {
+                  console.log(value, 'colorselected');
+
+                  if (value.product._id == this.selectedProduct) {
+                    console.log('productselected');
+
+                    value.product.productData.forEach((inrData: any) => {
+                      console.log('prodcutData inerData', inrData);
+                      console.log('selectedInrOPtion', this.selectedInrProductData);
+
+                      if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+                        // this.cartBool = true
+                        foundMatchingItem = true;
+                      } 
+                      // else {
+                      //   this.cartBool = false
+                      // }
+
+                    });
+                    // this.cartBool = true
+                  }
+                  // else {
+                  //   this.cartBool = false
+                  // }
+                  this.cartBool = foundMatchingItem;
+                });
+              }
             }
           }
         }
@@ -154,7 +162,7 @@ export class ProductDetailsPage implements OnInit {
     console.log(this.productData);
 
     let mainColor: any = []
-  
+
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(color);
@@ -181,27 +189,35 @@ export class ProductDetailsPage implements OnInit {
 
       // this.extractSizesAndColors(this.productData.productData)
     });
+    let foundMatchingItem = false; 
 
     this.cartListData.forEach((value: any) => {
-      console.log(value);
+      console.log(value, 'colorselected');
 
       if (value.product._id == this.selectedProduct) {
+        console.log('productselected');
 
         value.product.productData.forEach((inrData: any) => {
-          console.log(inrData);
-          console.log(this.selectedInrProductData);
-          
+          console.log('prodcutData inerData', inrData);
+          console.log('selectedInrOPtion', this.selectedInrProductData);
+
           if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
-            this.cartBool = true
-          } else {
-            this.cartBool = false
-          }
-          
+            // this.cartBool = true
+            foundMatchingItem = true;
+
+          } 
+          // else {
+          //   this.cartBool = false
+          // }
+
         });
         // this.cartBool = true
-      } else {
-        this.cartBool = false
       }
+      // else {
+      //   this.cartBool = false
+      // }
+      this.cartBool = foundMatchingItem;
+
     });
   }
   selectSize(id: any, color: any) {
@@ -210,7 +226,7 @@ export class ProductDetailsPage implements OnInit {
 
     let mainColor: any = []
 
-  
+
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(this.selectedInrProductData);
@@ -237,26 +253,37 @@ export class ProductDetailsPage implements OnInit {
       // this.extractSizesAndColors(this.productData.productData)
       // }
     });
+
+    let foundMatchingItem = false; 
+
     this.cartListData.forEach((value: any) => {
-      console.log(value);
+      console.log(value, 'colorselected');
 
       if (value.product._id == this.selectedProduct) {
+        console.log('productselected');
 
         value.product.productData.forEach((inrData: any) => {
-          console.log(inrData);
-          console.log(this.selectedInrProductData);
-          
+          console.log('prodcutData inerData', inrData);
+          console.log('selectedInrOPtion', this.selectedInrProductData);
+
           if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
-            this.cartBool = true
-          } else {
-            this.cartBool = false
-          }
-          
+            // this.cartBool = true
+
+            foundMatchingItem = true;
+
+          } 
+          // else {
+          //   this.cartBool = false
+          // }
+
         });
         // this.cartBool = true
-      } else {
-        this.cartBool = false
       }
+      // else {
+      //   this.cartBool = false
+      // }
+      this.cartBool = foundMatchingItem;
+
     });
   }
   extractSizesAndColors(products: any) {
@@ -351,33 +378,41 @@ export class ProductDetailsPage implements OnInit {
           this.cartListData = res.body.data
           console.log(this.cartListData);
           console.log(this.selectedProduct);
+          let foundMatchingItem = false; 
+          // if (this.cartListData.length) {
 
-          if (this.cartListData.length) {
+          this.cartListData.forEach((value: any,i:any) => {
+            console.log(value, 'colorselected');
+            console.log(i , 'loop 1');
+            
+            if (value.product._id == this.selectedProduct) {
+              console.log('productselected');
 
-            this.cartListData.forEach((value: any) => {
-              console.log(value);
+              value.product.productData.forEach((inrData: any, j:any) => {
+                console.log(j , "loop 2");
+                
+                console.log('prodcutData inerData', inrData);
+                console.log('selectedInrOPtion', this.selectedInrProductData);
 
-              if (value.product._id == this.selectedProduct) {
+                if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+                  // this.cartBool = true
+                  foundMatchingItem = true;
+                }
+                //  else {
+                //   this.cartBool = false
+                // }
 
-                value.product.productData.forEach((inrData: any) => {
-                  console.log(inrData);
-                  console.log(this.selectedInrProductData);
-                  
-                  if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
-                    this.cartBool = true
-                  } else {
-                    this.cartBool = false
-                  }
-                  
-                });
-                // this.cartBool = true
-              } else {
-                this.cartBool = false
-              }
-            });
-          } else {
-            this.cartBool = false
-          }
+              });
+              // this.cartBool = true
+            }
+            // else {
+            //   this.cartBool = false
+            // }
+            this.cartBool = foundMatchingItem;
+          });
+          // } else {
+          //   this.cartBool = false
+          // }
         }
       },
       error: (err) => {

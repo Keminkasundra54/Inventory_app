@@ -18,16 +18,17 @@ export class StatusDetailsPage implements OnInit {
 
   wishListData: any = []
   selectedOrder: any
+  selectedDetails: any
   userId: any
-  link :any
+  link: any
   swiperModules = [IonicSlides];
   wishList: boolean = false
   constructor(private route: ActivatedRoute, private order: OrderService, private wishlist: WishlistService, private product: ProductService,
-    private alertController:AlertController, private auth:AuthService) {
-      effect(()=>{
-        this.link =  this.auth.url()
-      })
-     }
+    private alertController: AlertController, private auth: AuthService) {
+    effect(() => {
+      this.link = this.auth.url()
+    })
+  }
 
   ngOnInit() {
     if (localStorage.getItem('userData')) {
@@ -37,7 +38,7 @@ export class StatusDetailsPage implements OnInit {
 
     }
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
       if (this.selectedOrder) {
@@ -51,6 +52,8 @@ export class StatusDetailsPage implements OnInit {
 
 
     this.selectedOrder = this.route.snapshot.paramMap.get('id')!;
+    this.selectedDetails = this.route.snapshot.paramMap.get('detailId')!
+
     console.log(this.selectedOrder,);
 
     if (this.selectedOrder) {
@@ -89,8 +92,19 @@ export class StatusDetailsPage implements OnInit {
     this.product.getProduct(obj).subscribe({
       next: (res: any) => {
         if (res) {
-          this.productData = res.body.data[0]
+          let data
+          data = res.body.data[0]
+          console.log(data, 'response');
 
+          // this.productData = res.body.data[0]
+          data.productData.forEach((info: any) => {
+            console.log(info);
+            if (this.selectedDetails == info._id) {
+              this.productData = info
+              console.log(this.productData);
+              
+            }
+          });
 
         }
       },
@@ -191,7 +205,7 @@ export class StatusDetailsPage implements OnInit {
           {
             text: 'Confirm',
             handler: async () => {
-                this.cancelOrder(id)
+              this.cancelOrder(id)
             },
           },
         ],
@@ -200,7 +214,7 @@ export class StatusDetailsPage implements OnInit {
       await confirmAlert.present();
     } catch (error) {
       console.error(error);
-     
+
     }
   }
   cancelOrder(id: any) {

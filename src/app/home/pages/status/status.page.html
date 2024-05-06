@@ -39,7 +39,7 @@
             </div>
             <div class="productDetail" *ngIf="mobile">
 
-              <a [routerLink]="['../status-details',order.orderData._id]">View Details<span> <ion-icon
+              <a [routerLink]="['../status-details',order.orderData._id,order.orderData.detailId]">View Details<span> <ion-icon
                     name="chevron-forward-outline"></ion-icon></span></a>
             </div>
 

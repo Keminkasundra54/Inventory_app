@@ -44,12 +44,15 @@
           </span> </a>
       </div>
     </div>
-    <swiper-container [slidesPerView]="'1'" [spaceBetween]="20" [modules]="swiperModules" [pagination]="true">
+    <ng-container *ngIf="productData && productData.productData ">
 
-      <swiper-slide *ngFor="let slide of productData.productData[0].images" class="swiperRelative">
-        <img src="{{link + slide}}" alt="">
-      </swiper-slide>
-    </swiper-container>
+      <swiper-container [slidesPerView]="'1'" [spaceBetween]="20" [modules]="swiperModules" [pagination]="true">
+  
+        <swiper-slide *ngFor="let slide of productData.productData[0].images" class="swiperRelative">
+          <img src="{{link + slide}}" alt="">
+        </swiper-slide>
+      </swiper-container>
+    </ng-container>
 
 
     <div class="main-details-sec">
@@ -76,20 +79,20 @@
           <p>{{productData.description}}</p>
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.color">
+      <div class="product-box" *ngIf="productData && productData.productData && productData.productData[0].color">
         <div class="product-title">
           <h4>Color</h4>
         </div>
         <div class="product-desc">
-          <p>{{productData.color}}</p>
+          <p>{{productData.productData[0].color}}</p>
         </div>
       </div>
-      <div class="product-box" *ngIf="productData.size">
+      <div class="product-box" *ngIf="productData && productData.productData && productData.productData[0].size">
         <div class="product-title">
           <h4>Size</h4>
         </div>
         <div class="product-desc">
-          <p>{{productData.size}}</p>
+          <p>{{productData.productData[0].size}}</p>
         </div>
       </div>
       <div class="product-box">
