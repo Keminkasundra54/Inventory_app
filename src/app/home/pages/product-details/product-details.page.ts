@@ -57,7 +57,7 @@ export class ProductDetailsPage implements OnInit {
     }, 2000);
   }
   ionViewDidEnter() {
-    if(this.route.snapshot.paramMap.get('detailId')!){
+    if (this.route.snapshot.paramMap.get('detailId')!) {
       this.prevUrl = true
     }
     this.router.events
@@ -118,6 +118,28 @@ export class ProductDetailsPage implements OnInit {
               console.log(this.selectedInrProductData, 'firstinit');
               // this.setSelectedProduct(this.selectedInrProductData.color)
               this.extractSizesAndColors(this.productData.productData)
+
+              this.cartListData.forEach((value: any) => {
+                console.log(value);
+          
+                if (value.product._id == this.selectedProduct) {
+          
+                  value.product.productData.forEach((inrData: any) => {
+                    console.log(inrData);
+                    console.log(this.selectedInrProductData);
+                    
+                    if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+                      this.cartBool = true
+                    } else {
+                      this.cartBool = false
+                    }
+                    
+                  });
+                  // this.cartBool = true
+                } else {
+                  this.cartBool = false
+                }
+              });
             }
           }
         }
@@ -132,6 +154,7 @@ export class ProductDetailsPage implements OnInit {
     console.log(this.productData);
 
     let mainColor: any = []
+  
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(color);
@@ -158,12 +181,36 @@ export class ProductDetailsPage implements OnInit {
 
       // this.extractSizesAndColors(this.productData.productData)
     });
+
+    this.cartListData.forEach((value: any) => {
+      console.log(value);
+
+      if (value.product._id == this.selectedProduct) {
+
+        value.product.productData.forEach((inrData: any) => {
+          console.log(inrData);
+          console.log(this.selectedInrProductData);
+          
+          if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+            this.cartBool = true
+          } else {
+            this.cartBool = false
+          }
+          
+        });
+        // this.cartBool = true
+      } else {
+        this.cartBool = false
+      }
+    });
   }
   selectSize(id: any, color: any) {
     console.log(this.productData);
     console.log(id);
 
     let mainColor: any = []
+
+  
     this.productData.productData.forEach((product: any) => {
       console.log(product);
       console.log(this.selectedInrProductData);
@@ -190,7 +237,27 @@ export class ProductDetailsPage implements OnInit {
       // this.extractSizesAndColors(this.productData.productData)
       // }
     });
+    this.cartListData.forEach((value: any) => {
+      console.log(value);
 
+      if (value.product._id == this.selectedProduct) {
+
+        value.product.productData.forEach((inrData: any) => {
+          console.log(inrData);
+          console.log(this.selectedInrProductData);
+          
+          if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+            this.cartBool = true
+          } else {
+            this.cartBool = false
+          }
+          
+        });
+        // this.cartBool = true
+      } else {
+        this.cartBool = false
+      }
+    });
   }
   extractSizesAndColors(products: any) {
     console.log('extractSizesAndColors - selectedInrProductData:', this.selectedInrProductData); // Log selectedInrProductData
@@ -283,11 +350,27 @@ export class ProductDetailsPage implements OnInit {
 
           this.cartListData = res.body.data
           console.log(this.cartListData);
+          console.log(this.selectedProduct);
+
           if (this.cartListData.length) {
 
             this.cartListData.forEach((value: any) => {
+              console.log(value);
+
               if (value.product._id == this.selectedProduct) {
-                this.cartBool = true
+
+                value.product.productData.forEach((inrData: any) => {
+                  console.log(inrData);
+                  console.log(this.selectedInrProductData);
+                  
+                  if (inrData.color == this.selectedInrProductData.color && inrData.size == this.selectedInrProductData.size) {
+                    this.cartBool = true
+                  } else {
+                    this.cartBool = false
+                  }
+                  
+                });
+                // this.cartBool = true
               } else {
                 this.cartBool = false
               }

@@ -115,6 +115,7 @@ export class CartPage implements OnInit {
     let obj: any = {
       userId: this.userId,
       productId: product.product._id,
+      detailId:product.product.productData[0]._id
     }
     this.cart.removeCart(obj).subscribe({
       next: (res) => {

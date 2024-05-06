@@ -460,8 +460,8 @@ export class CheckoutPage implements OnInit {
               //   console.log('Transaction cancelled.');
               //     this.loader = false
               // }, 10000);
-              this.presentToast('middle', 'Order Confirmed.!!', 'success')
               this.router.navigate(['status'])
+              this.presentToast('middle', 'Order Confirmed.!!', 'success')
             }
 
           },
