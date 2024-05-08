@@ -97,12 +97,15 @@ export class StatusDetailsPage implements OnInit {
           console.log(data, 'response');
 
           // this.productData = res.body.data[0]
+          let newData = data
           data.productData.forEach((info: any) => {
             console.log(info);
             if (this.selectedDetails == info._id) {
-              this.productData = info
+              // this.productData = info
               console.log(this.productData);
-              
+              newData.productData = []
+              newData.productData.push(info)
+              this.productData = newData
             }
           });
 

@@ -315,13 +315,7 @@ export class ProductDetailsPage implements OnInit {
     productsWithSelectedColor = products.filter((product: any) => product.color === this.selectedInrProductData.color);
     console.log(this.selectedInrProductData);
 
-    //   for (const product of productsWithSelectedColor) {
-
-    //     if (product && !this.sizeList.includes({_id:product._id,size:product.size})) {
-    //       this.sizeList.push(product.size);
-    //     }
-    //   }
-    // console.log(this.sizeList);
+  
     for (const product of productsWithSelectedColor) {
       // Checking if the product size with id is not already in the size list
       if (!this.sizeList.find((size: any) => size._id === product._id && size.size === product.size)) {
