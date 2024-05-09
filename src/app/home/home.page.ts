@@ -48,11 +48,7 @@ export class HomePage {
     this.menuController.close()
   }
   openSecondMenu() {
-    // this.menuController.open('second-menu');
-    // if (localStorage.getItem('userData')) {
-
-    //   this.userId = JSON.parse(localStorage.getItem('userData')!)._id
-    // }
+ 
 
     this.auth.menuSignal.set(true)
   }
