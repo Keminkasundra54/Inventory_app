@@ -13,7 +13,9 @@ export class AuthService {
   userData = signal('')
   menuSignal = signal(false)
   constructor(private http: HttpClient, private router: Router) {
-
+    effect(()=>{
+      this.getToken()
+    })
 
   }
   signup(data: any) {
@@ -58,6 +60,8 @@ export class AuthService {
   }
   getToken() {
     if (localStorage.getItem('userData')) {
+      console.log(JSON.parse(localStorage.getItem('userData')!).token);
+      
       return JSON.parse(localStorage.getItem('userData')!).token
     } else {
       this.router.navigate(['']);

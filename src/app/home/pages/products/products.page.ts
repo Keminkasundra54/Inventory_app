@@ -98,7 +98,8 @@ export class ProductsPage implements OnInit {
   }
   openSecondMenu() {
     if (localStorage.getItem('userData')) {
-
+      console.log(JSON.parse(localStorage.getItem('userData')!)._id);
+      
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
     }
     this.menuController.open('second-menu');

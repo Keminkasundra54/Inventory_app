@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, effect } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 export class AuthInterceptor implements HttpInterceptor {
   token:any
   constructor(private auth: AuthService, private loader: LoaderService) { 
+
     if(this.auth.getToken()){
     this. token = this.auth.getToken();
 
