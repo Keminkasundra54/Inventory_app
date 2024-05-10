@@ -225,41 +225,7 @@ export class ProductsPage implements OnInit {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
-  // findMinMax(arr: any) {
-  //   console.log(arr);
-
-  //   // let min = arr[0].price, max = arr[0].price;
-
-  //   // for (let i = 1, len = arr.length; i < len; i++) {
-  //   //   let v = arr[i].price;
-  //   //   min = (v < min) ? v : min;
-  //   //   max = (v > max) ? v : max;
-  //   // }
-  //   // console.log(min, max);
-
-  //   // return [min, max];
-
-  //   if (arr.length === 0) {
-  //     return { minPrice: 0, maxPrice: 0 }; 
-  //   }
-
-  //   let minPrice = Infinity; 
-  //   let maxPrice = -Infinity; 
-
-  //   arr.forEach((product: any) => {
-  //     product.productData.forEach((data: any) => {
-  //       if (data.price < minPrice) {
-  //         minPrice = data.price;
-  //       }
-  //       if (data.price > maxPrice) {
-  //         maxPrice = data.price;
-  //       }
-  //     });
-  //   });
-
-  //   return [ minPrice, maxPrice ];
-  // }
-
+ 
   findMinMax(arr: any) {
     console.log(arr);
     
@@ -280,12 +246,10 @@ export class ProductsPage implements OnInit {
     return [min, max];
 }
   selectedCat(event: any) {
-    console.log(event, 'yessssss');
     this.getProduct(event)
   }
   extractSizesAndColors(products: any[]) {
     for (const product of products) {
-      // Extract size
       if (product.productData) {
 
         product.productData.forEach((size: any) => {
@@ -296,7 +260,6 @@ export class ProductsPage implements OnInit {
         })
 
       }
-      // Extract color
       if (product.productData) {
 
         product.productData.forEach((color: any) => {
@@ -364,10 +327,7 @@ export class ProductsPage implements OnInit {
     if (this.selectedColors.length > 0) {
       obj['color'] = this.selectedColors;
     }
-    // if (this.priceObj) {
-    //   obj = this.priceObj
 
-    // }
     if (this.priceObj) {
       obj['pricefrom'] = this.priceObj.pricefrom;
       obj['priceto'] = this.priceObj.priceto;
