@@ -7,7 +7,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 })
 export class NotificationComponent implements OnInit {
   @Output() cancelModal = new EventEmitter<boolean>();
-  
+
   userId: string = ''
   notifications: any = []
   selectedNoti: any = []
@@ -19,7 +19,7 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit() {
     this.getUserNotification()
-    
+
   }
 
   cancel() {
@@ -36,7 +36,6 @@ export class NotificationComponent implements OnInit {
         if (res) {
           this.notifications = res.body.data
           const groupedNotifications = this.groupNotificationsByDate(this.notifications);
-          // Convert the grouped notifications into an array
           this.notifications = Object.keys(groupedNotifications).map(dateLabel => ({
             dateLabel,
             notifications: groupedNotifications[dateLabel]
@@ -87,14 +86,14 @@ export class NotificationComponent implements OnInit {
 
 
 
-  read(id:any) {
+  read(id: any) {
     console.log('resss');
     let obj = {
       notificationId: id,
       read: 'true'
     }
     this.noti.updateNoti(obj).subscribe({
-      next: (res: any)=>{
+      next: (res: any) => {
         if (res) {
           this.getUserNotification()
         }
@@ -106,14 +105,14 @@ export class NotificationComponent implements OnInit {
     })
 
   }
-  unread(id:any) {
+  unread(id: any) {
     console.log('resss');
     let obj = {
       notificationId: id,
       read: 'false'
     }
     this.noti.updateNoti(obj).subscribe({
-      next: (res: any)=>{
+      next: (res: any) => {
         if (res) {
           this.getUserNotification()
         }
@@ -124,13 +123,13 @@ export class NotificationComponent implements OnInit {
       }
     })
   }
-  delete(id:any) {
+  delete(id: any) {
     console.log('resss');
     let obj = {
       notificationId: id,
     }
     this.noti.delete(obj).subscribe({
-      next: (res: any)=>{
+      next: (res: any) => {
         if (res) {
           this.getUserNotification()
         }

@@ -1,4 +1,4 @@
- <ion-header>
+<ion-header>
   <ion-toolbar color="primary">
 
     <ion-title>Notifications</ion-title>
@@ -8,35 +8,13 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <ng-container *ngFor="let noti of notifications" >
-    <ion-item-sliding>
-      <ion-item [ngClass]="noti.read == 'true' ? 'read' : 'unread'">
-        <ion-label>{{noti.message}}</ion-label>
-      </ion-item>
-  
-      <ion-item-options>
-        <ion-item-option *ngIf="noti.read == 'false'" (click)="read(noti._id)">Read</ion-item-option>
-        <ion-item-option *ngIf="noti.read == 'true'" (click)="unread(noti._id)">Unread</ion-item-option>
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ng-container>
-  
-  </ion-list>
-</ion-content>
-
- -->
-
 
 <ion-content [fullscreen]="true">
   <ion-list>
     <ng-container *ngFor="let group of notifications">
       <ion-item-divider>{{ group.dateLabel }}</ion-item-divider>
       <ng-container *ngFor="let noti of group.notifications">
-        <ion-item-sliding >
+        <ion-item-sliding>
           <ion-item [ngClass]="noti.read === 'true' ? 'read' : 'unread'">
             <ion-label>{{ noti.message }}</ion-label>
           </ion-item>
