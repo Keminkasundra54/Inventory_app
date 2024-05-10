@@ -14,11 +14,11 @@ export class WishlistPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
 
   userId: any
-  wishListData:any = []
-  link :any
+  wishListData: any = []
+  link: any
   mobile: boolean = false
-  constructor(private wish: WishlistService, private plateform: Platform , private auth:AuthService) {
-    if(localStorage.getItem('userData')){
+  constructor(private wish: WishlistService, private plateform: Platform, private auth: AuthService) {
+    if (localStorage.getItem('userData')) {
 
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
     }
@@ -39,20 +39,18 @@ export class WishlistPage implements OnInit {
   ionViewDidEnter() {
     this.getWishlist()
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
-      // Any calls to load data go here
-    this.getWishlist()
-      
+      this.getWishlist()
+
       event.target.complete();
     }, 2000);
   }
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      // this.message = `Hello, ${ev.detail.data}!`;
       console.log('ok');
-      
+
     }
   }
   cancel() {

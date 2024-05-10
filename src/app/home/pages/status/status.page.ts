@@ -12,11 +12,11 @@ import { environment } from 'src/environments/environment';
 export class StatusPage implements OnInit {
   userId: any
   orderData: any = []
-  link :any
+  link: any
   mobile: boolean = false
-  constructor(private order: OrderService, private plateform: Platform, private auth:AuthService) { 
-    effect(()=>{
-      this.link =  this.auth.url()
+  constructor(private order: OrderService, private plateform: Platform, private auth: AuthService) {
+    effect(() => {
+      this.link = this.auth.url()
     })
   }
 
@@ -27,9 +27,8 @@ export class StatusPage implements OnInit {
 
     }
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
-      // Any calls to load data go here
       this.getStatus()
       event.target.complete();
     }, 2000);

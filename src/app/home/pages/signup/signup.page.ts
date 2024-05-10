@@ -30,7 +30,10 @@ export class SignupPage implements OnInit {
 
       this.auth.signup(this.signupForm.value).subscribe({
         next: (res: any) => {
-          this.router.navigate([''])
+          if (res) {
+
+            this.router.navigate([''])
+          }
         },
         error: (err) => {
           console.error(err);
