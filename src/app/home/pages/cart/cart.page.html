@@ -28,16 +28,7 @@
             <ion-thumbnail slot="start" *ngIf="product && product.product.productData">
               <img [src]="link + product.product.productData[0].images[0]" alt="Product Image">
             </ion-thumbnail>
-            <!-- <div class="counter flex align-center">
 
-              <a (click)="decreaseQuantity(product)">
-                <ion-icon name="remove-outline"></ion-icon>
-              </a>
-              {{ product.quantity }}
-              <a (click)="increaseQuantity(product)">
-                <ion-icon name="add-outline"></ion-icon>
-              </a>
-            </div> -->
           </div>
           <div class="center-col">
             <div class="productName">
@@ -51,8 +42,8 @@
               <p>₹{{ product.product.productData[0].discountPrice }}</p>
             </div>
             <div class="productDetail" *ngIf="mobile">
-                <a [routerLink]="['../product-details',product.product._id, product.product.productData[0]._id ]">View Details<span> <ion-icon
-                      name="chevron-forward-outline"></ion-icon></span></a>
+              <a [routerLink]="['../product-details',product.product._id, product.product.productData[0]._id ]">View
+                Details<span> <ion-icon name="chevron-forward-outline"></ion-icon></span></a>
             </div>
 
             <!-- <div class="removeButton">
@@ -80,7 +71,7 @@
             </a>
           </div>
           <div class="counter flex align-center" *ngIf="product.product.stock <= 0">
-            <p >Out of stock</p>
+            <p>Out of stock</p>
           </div>
           <div class="removeButton">
             <a (click)="removeProduct(product)">
