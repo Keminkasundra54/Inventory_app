@@ -25,7 +25,7 @@ export class CheckoutPage implements OnInit {
   oldAddressData: any = []
   addressForm: FormGroup
   selectedAddress: any
-  link :any
+  link: any
   mobile: boolean = false
   promoCode: any = null
   razorPayOrderData: any
@@ -44,10 +44,10 @@ export class CheckoutPage implements OnInit {
     private router: Router,
     private toastController: ToastController,
     private alertController: AlertController,
-    private auth:AuthService) {
-      effect(() => {
-        this.link = this.auth.url()
-      })
+    private auth: AuthService) {
+    effect(() => {
+      this.link = this.auth.url()
+    })
     if (localStorage.getItem('userData')) {
 
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
@@ -98,7 +98,7 @@ export class CheckoutPage implements OnInit {
     this.getProfile()
 
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
       this.getCart()
@@ -351,7 +351,7 @@ export class CheckoutPage implements OnInit {
               if (environment.enablePaymentGateway) {
                 // this.loader = true
                 // this.payWithRazor(this.razorPayOrderData)
-                 this.payWithRazorpay(this.razorPayOrderData)
+                this.payWithRazorpay(this.razorPayOrderData)
               }
             }
           }
@@ -417,7 +417,7 @@ export class CheckoutPage implements OnInit {
       let orderData: any = []
 
       console.log(this.cartData);
-      
+
 
       for (let i = 0; i < this.cartData.length; i++) {
         const product = this.cartData[i];
@@ -445,21 +445,7 @@ export class CheckoutPage implements OnInit {
             if (res) {
 
               console.log(res);
-              // this.paymentScreen = true
-              // this.success = true
-              // this.loader = false
 
-
-              // setTimeout(() => {
-              //   this.paymentScreen = false
-              //   this.success = false
-              //   this.failed = false
-              //   console.log(this.paymentScreen);
-              //   console.log(this.success);
-              //   console.log(this.failed);
-              //   console.log('Transaction cancelled.');
-              //     this.loader = false
-              // }, 10000);
               this.router.navigate(['status'])
               this.presentToast('middle', 'Order Confirmed.!!', 'success')
             }
@@ -468,20 +454,6 @@ export class CheckoutPage implements OnInit {
           error: (err) => {
             console.error(err);
 
-            // this.paymentScreen = true
-            // this.loader = false
-            // this.failed = true
-
-            // setTimeout(() => {
-            //   this.paymentScreen = false
-            //   this.success = false
-            //   this.failed = false
-            //   console.log(this.paymentScreen);
-            //   console.log(this.success);
-            //   console.log(this.failed);
-            //   console.log('Transaction cancelled.');
-            //     this.loader = false
-            // }, 7000);
             this.presentToast('middle', 'Something went Wrong.!!', 'danger')
 
             console.log('Transaction cancelled.');
@@ -538,7 +510,7 @@ export class CheckoutPage implements OnInit {
 
 
 
-  async payWithRazorpay(data:any) {
+  async payWithRazorpay(data: any) {
     const options = {
       key: environment.razorPayKey,
       amount: data.amount,
@@ -559,14 +531,14 @@ export class CheckoutPage implements OnInit {
       let data = (await Checkout.open(options));
       console.log(data);
       console.log(data.response);
-      
-      
+
+
       console.log(data.response + "AcmeCorp");
       console.log(JSON.stringify(data))
       let orderData: any = []
 
       console.log(this.cartData);
-      
+
 
       for (let i = 0; i < this.cartData.length; i++) {
         const product = this.cartData[i];
@@ -589,39 +561,17 @@ export class CheckoutPage implements OnInit {
         totalAmount: this.getTotalPrice(),
         promoCode: this.promoForm.value.promo
       }
-      if(data.response){
-          this.order.addOrder(obj).subscribe({
-            next: (res: any) => {
-              if (res) {
-  
-                console.log(res);
-                // this.paymentScreen = true
-                // this.success = true
-                // this.loader = false
-  
-  
-                // setTimeout(() => {
-                //   this.paymentScreen = false
-                //   this.success = false
-                //   this.failed = false
-                //   console.log(this.paymentScreen);
-                //   console.log(this.success);
-                //   console.log(this.failed);
-                //   console.log('Transaction cancelled.');
-                //     this.loader = false
-                // }, 10000);
-                this.presentToast('middle', 'Order Confirmed.!!', 'success')
-                this.router.navigate(['status'])
-              }
-  
-            },
-            error: (err) => {
-              console.error(err);
-  
+      if (data.response) {
+        this.order.addOrder(obj).subscribe({
+          next: (res: any) => {
+            if (res) {
+
+              console.log(res);
               // this.paymentScreen = true
+              // this.success = true
               // this.loader = false
-              // this.failed = true
-  
+
+
               // setTimeout(() => {
               //   this.paymentScreen = false
               //   this.success = false
@@ -631,14 +581,36 @@ export class CheckoutPage implements OnInit {
               //   console.log(this.failed);
               //   console.log('Transaction cancelled.');
               //     this.loader = false
-              // }, 7000);
-              this.presentToast('middle', 'Something went Wrong.!!', 'danger')
-  
-              console.log('Transaction cancelled.');
-  
+              // }, 10000);
+              this.presentToast('middle', 'Order Confirmed.!!', 'success')
+              this.router.navigate(['status'])
             }
-          })
-        
+
+          },
+          error: (err) => {
+            console.error(err);
+
+            // this.paymentScreen = true
+            // this.loader = false
+            // this.failed = true
+
+            // setTimeout(() => {
+            //   this.paymentScreen = false
+            //   this.success = false
+            //   this.failed = false
+            //   console.log(this.paymentScreen);
+            //   console.log(this.success);
+            //   console.log(this.failed);
+            //   console.log('Transaction cancelled.');
+            //     this.loader = false
+            // }, 7000);
+            this.presentToast('middle', 'Something went Wrong.!!', 'danger')
+
+            console.log('Transaction cancelled.');
+
+          }
+        })
+
       }
     } catch (error: any) {
       //it's paramount that you parse the data into a JSONObject
