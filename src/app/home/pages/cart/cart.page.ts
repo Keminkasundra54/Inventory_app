@@ -15,10 +15,10 @@ export class CartPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   userId: any
   cartData: any = []
-  link :any
+  link: any
   mobile: boolean = false
 
-  constructor(private cart: CartService,private plateform: Platform , private auth:AuthService) {
+  constructor(private cart: CartService, private plateform: Platform, private auth: AuthService) {
     if (localStorage.getItem('userData')) {
 
       this.userId = JSON.parse(localStorage.getItem('userData')!)._id
@@ -36,7 +36,7 @@ export class CartPage implements OnInit {
 
     }
   }
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
       this.getCart()
@@ -76,11 +76,15 @@ export class CartPage implements OnInit {
     })
   }
   increaseQuantity(product: any) {
+    console.log(product);
+
     product.quantity++;
     this.updateCart(product);
   }
 
   decreaseQuantity(product: any) {
+    console.log(product);
+
     if (product.quantity > 1) {
       product.quantity--;
       this.updateCart(product);
@@ -94,7 +98,7 @@ export class CartPage implements OnInit {
     let obj: any = {
       userId: this.userId,
       productId: product.product._id,
-      detailId:product.product.productData[0]._id,
+      detailId: product.product.productData[0]._id,
       quantity: product.quantity
     }
     this.cart.updateCart(obj).subscribe({
@@ -116,7 +120,7 @@ export class CartPage implements OnInit {
     let obj: any = {
       userId: this.userId,
       productId: product.product._id,
-      detailId:product.product.productData[0]._id
+      detailId: product.product.productData[0]._id
     }
     this.cart.removeCart(obj).subscribe({
       next: (res) => {
@@ -134,9 +138,9 @@ export class CartPage implements OnInit {
     let totalPrice = 0;
     for (const product of this.cartData) {
       console.log(product);
-      
+
       // Assuming product.price is the original price and product.product.discountedPrice is the discounted price
-      if(product.product.productData[0].stock > 0){
+      if (product.product.productData[0].stock > 0) {
 
         totalPrice += product.product.productData[0].discountPrice ? product.product.productData[0].discountPrice * product.quantity : product.product.productData[0].price * product.quantity;
       }
@@ -153,7 +157,7 @@ export class CartPage implements OnInit {
       const discount = product.product.productData[0].discountPrice;
       const discountedPrice = price * (discount / 100);
       console.log(discountedPrice);
-      
+
     }
     return totalPrice
   }
