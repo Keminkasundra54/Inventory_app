@@ -467,22 +467,6 @@ export class CheckoutPage implements OnInit {
 
     options.modal.ondismiss = (() => {
 
-      // handle the case when user closes the form while transaction is in progress
-      // this.paymentScreen = true
-      // this.loader = false
-      // this.failed = true
-      // // console.log(this.paymentScreen);
-
-      // setTimeout(() => {
-      //   this.paymentScreen = false;
-      //   this.success = false;
-      //   this.failed = false;
-      //   console.log(this.paymentScreen);
-      //   console.log(this.success);
-      //   console.log(this.failed);
-      //   console.log('Transaction cancelled.');
-      //     this.loader = false
-      // }, 7000);
       this.presentToast('middle', 'Transaction cancelled.', 'danger')
 
       console.log('Transaction cancelled.');
