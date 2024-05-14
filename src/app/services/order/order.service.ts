@@ -14,8 +14,8 @@ function _window(): any {
   providedIn: 'root'
 })
 export class OrderService {
-  url :any
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: object , private auth:AuthService) {
+  url: any
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: object, private auth: AuthService) {
     effect(() => {
       this.url = this.auth.url()
     })
@@ -32,12 +32,14 @@ export class OrderService {
   }
   createRpOrder(data: any) {
     let url = this.url + 'createOrderInRp'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
 
   addOrder(data: any) {
     let url = this.url + 'addOrder'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
@@ -45,6 +47,7 @@ export class OrderService {
 
   orderStatus(data: any) {
     let url = this.url + 'getUserOrderStatus'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
