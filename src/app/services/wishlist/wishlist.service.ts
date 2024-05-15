@@ -9,28 +9,30 @@ import { AuthService } from '../auth/auth.service';
 })
 export class WishlistService {
 
-  url :any
-  constructor(private http: HttpClient, private router: Router , private auth:AuthService) { 
+  url: any
+  constructor(private http: HttpClient, private router: Router, private auth: AuthService) {
     effect(() => {
       this.url = this.auth.url()
     })
   }
 
-  getWishList(id:any){
+  getWishList(id: any) {
     let url = this.url + 'getUserWishlist'
+    console.log(url);
 
-    return this.http.post(url,id, { observe: 'response' })
+    return this.http.post(url, id, { observe: 'response' })
   }
-  addWishList(id:any){
-
+  addWishList(id: any) {
+    console.log(id);
     let url = this.url + 'addWishlist'
 
-    return this.http.post(url,id, { observe: 'response' })
+    return this.http.post(url, id, { observe: 'response' })
   }
-  removeWishList(id:any){
+  removeWishList(id: any) {
+    console.log(id);
 
     let url = this.url + 'removeWishlist'
 
-    return this.http.post(url,id, { observe: 'response' })
+    return this.http.post(url, id, { observe: 'response' })
   }
 }
