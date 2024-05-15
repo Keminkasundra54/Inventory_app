@@ -9,8 +9,8 @@ import { AuthService } from '../auth/auth.service';
 })
 export class PromocodeService {
 
-  url :any
-  constructor(private http: HttpClient, private router: Router , private auth:AuthService) { 
+  url: any
+  constructor(private http: HttpClient, private router: Router, private auth: AuthService) {
     effect(() => {
       this.url = this.auth.url()
     })
@@ -23,11 +23,13 @@ export class PromocodeService {
   }
   getPromoCode(data: any) {
     let url = this.url + 'getUserWishlist'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
-  searchPromoCode(data:any){
+  searchPromoCode(data: any) {
     let url = this.url + 'searchPromoCode'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
@@ -40,6 +42,7 @@ export class PromocodeService {
   edit(id: any) {
 
     let url = this.url + 'getOnePromoCode'
+    console.log(id);
 
     return this.http.post(url, id, { observe: 'response' })
   }
