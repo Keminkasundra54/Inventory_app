@@ -8,25 +8,28 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProfileService {
 
-  url :any
-  constructor(private http: HttpClient, private auth:AuthService) {
+  url: any
+  constructor(private http: HttpClient, private auth: AuthService) {
     effect(() => {
       this.url = this.auth.url()
     })
-   }
+  }
 
   getProfile(id: any) {
     let url = this.url + 'getUserProfile'
+    console.log(id);
 
     return this.http.post(url, id, { observe: 'response' })
   }
   addAddress(data: any) {
     let url = this.url + 'addAddress'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
   removeAddress(data: any) {
     let url = this.url + 'removeAddress'
+    console.log(data);
 
     return this.http.post(url, data, { observe: 'response' })
   }
